@@ -1,0 +1,157 @@
+export type CenterStatus = 'ACTIVE' | 'CLOSED' | 'TEMPORARILY_CLOSED' | 'UNKNOWN';
+export type VerificationStatus = 'VERIFIED' | 'UNVERIFIED' | 'PENDING';
+export type VoteType = 'UP' | 'DOWN';
+export type SubmissionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
+
+export type RecyclableCategory =
+  | 'Paper'
+  | 'Plastic'
+  | 'Glass'
+  | 'Metal'
+  | 'Aluminium'
+  | 'E-Waste'
+  | 'Used Clothes'
+  | 'Cooking Oil'
+  | 'Batteries'
+  | 'Light Bulbs'
+  | 'Printer Cartridges'
+  | 'Cardboard'
+  | 'Furniture'
+  | 'General Recycling';
+
+export const RECYCLABLE_CATEGORIES: RecyclableCategory[] = [
+  'Paper',
+  'Plastic',
+  'Glass',
+  'Metal',
+  'Aluminium',
+  'E-Waste',
+  'Used Clothes',
+  'Cooking Oil',
+  'Batteries',
+  'Light Bulbs',
+  'Printer Cartridges',
+  'Cardboard',
+  'Furniture',
+  'General Recycling',
+];
+
+export const MALAYSIA_STATES = [
+  'Kuala Lumpur',
+  'Selangor',
+  'Penang',
+  'Johor',
+  'Perak',
+  'Melaka',
+  'Negeri Sembilan',
+  'Pahang',
+  'Kedah',
+  'Kelantan',
+  'Terengganu',
+  'Perlis',
+  'Sabah',
+  'Sarawak',
+  'Putrajaya',
+  'Labuan',
+] as const;
+
+export type MalaysiaState = (typeof MALAYSIA_STATES)[number];
+
+export interface OpeningHours {
+  monday?: string;
+  tuesday?: string;
+  wednesday?: string;
+  thursday?: string;
+  friday?: string;
+  saturday?: string;
+  sunday?: string;
+}
+
+export interface RecyclingCenter {
+  id: string;
+  slug: string;
+  name: string;
+  address: string;
+  state: string;
+  area: string;
+  latitude: number;
+  longitude: number;
+  phone?: string;
+  website_url?: string;
+  google_maps_url?: string;
+  accepted_items: RecyclableCategory[];
+  tags: string[];
+  opening_hours: OpeningHours;
+  status: CenterStatus;
+  verification_status: VerificationStatus;
+  upvote_count: number;
+  downvote_count: number;
+  photo_count: number;
+  comment_count: number;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+  last_verified_at?: string;
+  // computed
+  distance_km?: number;
+  thumbnail_url?: string;
+}
+
+export interface Comment {
+  id: string;
+  center_id: string;
+  comment_text: string;
+  submitter_email: string;
+  status: SubmissionStatus;
+  created_at: string;
+}
+
+export interface Photo {
+  id: string;
+  center_id: string;
+  image_url: string;
+  thumbnail_url: string;
+  submitter_email: string;
+  status: SubmissionStatus;
+  created_at: string;
+}
+
+export interface SearchParams {
+  q?: string;
+  state?: string;
+  items?: string[];
+  open_now?: boolean;
+  verified_only?: boolean;
+  has_photos?: boolean;
+  sort?: 'nearest' | 'most_upvoted' | 'recently_updated';
+  lat?: number;
+  lng?: number;
+  page?: number;
+  limit?: number;
+}
+
+export interface SearchResult {
+  centers: RecyclingCenter[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export type ReportType =
+  | 'CLOSED_PERMANENTLY'
+  | 'WRONG_LOCATION'
+  | 'WRONG_HOURS'
+  | 'WRONG_ITEMS'
+  | 'DUPLICATE'
+  | 'SPAM'
+  | 'OTHER';
+
+export const REPORT_TYPES: { value: ReportType; label: string }[] = [
+  { value: 'CLOSED_PERMANENTLY', label: 'Closed Permanently' },
+  { value: 'WRONG_LOCATION', label: 'Wrong Location' },
+  { value: 'WRONG_HOURS', label: 'Wrong Hours' },
+  { value: 'WRONG_ITEMS', label: 'Does Not Accept Listed Items' },
+  { value: 'DUPLICATE', label: 'Duplicate Entry' },
+  { value: 'SPAM', label: 'Spam' },
+  { value: 'OTHER', label: 'Other' },
+];
