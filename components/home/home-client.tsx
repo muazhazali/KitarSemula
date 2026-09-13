@@ -3,13 +3,11 @@
 import dynamic from 'next/dynamic';
 import { useState, useCallback, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { PlusIcon, RecycleIcon } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { RecycleIcon } from 'lucide-react';
 import { SearchBar } from '@/components/search/search-bar';
 import { FilterPanel } from '@/components/search/filter-panel';
 import { CenterList } from '@/components/centers/center-list';
 import { LocationButton } from '@/components/map/location-button';
-import { AddCenterSheet } from '@/components/centers/add-center-sheet';
 import { MapLegend } from '@/components/map/map-legend';
 import type { RecyclingCenter, SearchParams } from '@/lib/types';
 
@@ -29,7 +27,6 @@ async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
   if (params.items?.length) params.items.forEach((i) => url.searchParams.append('items', i));
   if (params.open_now) url.searchParams.set('open_now', 'true');
   if (params.verified_only) url.searchParams.set('verified_only', 'true');
-  if (params.has_photos) url.searchParams.set('has_photos', 'true');
   if (params.sort) url.searchParams.set('sort', params.sort);
   if (params.lat != null) url.searchParams.set('lat', String(params.lat));
   if (params.lng != null) url.searchParams.set('lng', String(params.lng));
@@ -48,7 +45,6 @@ export function HomeClient() {
   });
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | undefined>();
   const [selectedCenter, setSelectedCenter] = useState<RecyclingCenter | undefined>();
-  const [addSheetOpen, setAddSheetOpen] = useState(false);
 
   const queryParams: SearchParams = useMemo(
     () => ({
@@ -92,10 +88,6 @@ export function HomeClient() {
         </div>
         <div className="ml-auto flex items-center gap-2">
           <LocationButton onLocation={handleLocation} />
-          <Button size="sm" onClick={() => setAddSheetOpen(true)} className="gap-1.5">
-            <PlusIcon className="size-4" data-icon="inline-start" aria-hidden="true" />
-            <span className="hidden sm:inline">Add Center</span>
-          </Button>
         </div>
       </header>
 
@@ -140,8 +132,6 @@ export function HomeClient() {
           </div>
         </aside>
       </div>
-
-      <AddCenterSheet open={addSheetOpen} onOpenChange={setAddSheetOpen} />
     </div>
   );
 }

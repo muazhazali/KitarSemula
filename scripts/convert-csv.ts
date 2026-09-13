@@ -447,8 +447,6 @@ function main() {
       verification_status: 'UNVERIFIED' as VerificationStatus,
       upvote_count: 0,
       downvote_count: 0,
-      photo_count: 0,
-      comment_count: 0,
       ...(notes ? { notes } : {}),
       created_at: createdAt,
       updated_at: updatedAt,

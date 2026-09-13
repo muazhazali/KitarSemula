@@ -2,30 +2,20 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import Image from 'next/image';
-import { useState } from 'react';
 import {
   ArrowLeftIcon,
   MapPinIcon,
   PhoneIcon,
   GlobeIcon,
   NavigationIcon,
-  CameraIcon,
-  PencilIcon,
-  FlagIcon,
   CheckCircleIcon,
   ClockIcon,
   RecycleIcon,
   ChevronRightIcon,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { VoteButtons } from './vote-buttons';
-import { CommentsSection } from './comments-section';
-import { ReportDialog } from './report-dialog';
-import { SuggestEditDialog } from './suggest-edit-dialog';
-import { PhotoUploadDialog } from './photo-upload-dialog';
 import { OpeningHoursTable } from './opening-hours';
 import type { RecyclingCenter } from '@/lib/types';
 import { isOpenNow, getTodayHours } from '@/lib/utils/centers';
@@ -40,10 +30,6 @@ interface CenterDetailClientProps {
 }
 
 export function CenterDetailClient({ center }: CenterDetailClientProps) {
-  const [reportOpen, setReportOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [photoOpen, setPhotoOpen] = useState(false);
-
   const openNow = isOpenNow(center);
   const todayHours = getTodayHours(center);
 
@@ -277,80 +263,8 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
 
         <Separator />
 
-        {/* Photos placeholder */}
-        <section aria-labelledby="photos-heading">
-          <div className="mb-3 flex items-center justify-between">
-            <h2 id="photos-heading" className="text-foreground text-base font-semibold">
-              Photos
-              {center.photo_count > 0 && (
-                <span className="text-muted-foreground ml-1.5 text-sm font-normal">
-                  ({center.photo_count})
-                </span>
-              )}
-            </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setPhotoOpen(true)}
-              className="gap-1.5"
-            >
-              <CameraIcon className="size-4" data-icon="inline-start" aria-hidden="true" />
-              Upload
-            </Button>
-          </div>
-
-          {center.thumbnail_url ? (
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              <div className="bg-muted relative aspect-video overflow-hidden rounded-lg border">
-                <Image
-                  src={center.thumbnail_url}
-                  alt={`Photo of ${center.name}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              {center.photo_count > 1 &&
-                Array.from({ length: Math.min(center.photo_count - 1, 2) }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="bg-muted flex aspect-video items-center justify-center overflow-hidden rounded-lg border"
-                  >
-                    <span className="text-muted-foreground text-xs">Photo {i + 2}</span>
-                  </div>
-                ))}
-            </div>
-          ) : (
-            <div className="border-border flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed py-10 text-center">
-              <CameraIcon className="text-muted-foreground size-8" aria-hidden="true" />
-              <p className="text-muted-foreground text-sm">
-                No photos yet. Be the first to upload one.
-              </p>
-            </div>
-          )}
-        </section>
-
-        <Separator />
-
-        {/* Comments */}
-        <CommentsSection slug={center.slug} />
-
-        <Separator />
-
         {/* Actions footer */}
         <section aria-label="Center actions" className="flex flex-wrap gap-2 pb-6">
-          <Button variant="outline" size="sm" onClick={() => setEditOpen(true)} className="gap-1.5">
-            <PencilIcon className="size-4" data-icon="inline-start" aria-hidden="true" />
-            Suggest Edit
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setReportOpen(true)}
-            className="text-destructive border-destructive/30 hover:bg-destructive/5 gap-1.5"
-          >
-            <FlagIcon className="size-4" data-icon="inline-start" aria-hidden="true" />
-            Report Issue
-          </Button>
           <div className="text-muted-foreground ml-auto self-center text-xs">
             Last updated{' '}
             {new Date(center.updated_at).toLocaleDateString('en-MY', {
@@ -361,11 +275,6 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
           </div>
         </section>
       </main>
-
-      {/* Dialogs */}
-      <ReportDialog slug={center.slug} open={reportOpen} onOpenChange={setReportOpen} />
-      <SuggestEditDialog center={center} open={editOpen} onOpenChange={setEditOpen} />
-      <PhotoUploadDialog centerName={center.name} open={photoOpen} onOpenChange={setPhotoOpen} />
     </div>
   );
 }

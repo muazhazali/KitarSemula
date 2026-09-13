@@ -18,9 +18,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.088Z",
+    "created_at": "2026-09-13T02:19:23.090Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -40,9 +38,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -62,9 +58,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -84,9 +78,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -108,9 +100,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -130,9 +120,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -152,9 +140,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -174,9 +160,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -196,9 +180,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -222,9 +204,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -249,9 +229,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.091Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -277,9 +255,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -305,9 +281,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -334,9 +308,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -362,9 +334,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -384,9 +354,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -412,9 +380,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.089Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -434,9 +400,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -456,9 +420,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -484,9 +446,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -508,9 +468,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -532,9 +490,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -554,9 +510,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -581,9 +535,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -608,9 +560,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -636,9 +586,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -658,9 +606,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -684,9 +630,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -708,10 +652,8 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
     "notes": "not a general purpose recycling center",
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -735,9 +677,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -761,9 +701,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -788,9 +726,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -815,9 +751,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -842,9 +776,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -864,9 +796,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -891,9 +821,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -918,9 +846,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -945,9 +871,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -973,9 +897,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1001,9 +923,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1028,9 +948,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1055,9 +973,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1081,9 +997,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1109,9 +1023,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1131,9 +1043,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1158,9 +1068,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1180,9 +1088,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1202,9 +1108,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1229,9 +1133,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1256,9 +1158,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1283,9 +1183,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.090Z",
+    "created_at": "2026-09-13T02:19:23.092Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1314,9 +1212,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1336,9 +1232,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1362,9 +1256,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1396,9 +1288,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1418,9 +1308,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1440,9 +1328,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1462,9 +1348,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1496,9 +1380,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1530,9 +1412,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1564,9 +1444,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1598,9 +1476,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1632,9 +1508,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1658,9 +1532,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1684,9 +1556,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1710,9 +1580,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1738,9 +1606,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1764,9 +1630,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1790,9 +1654,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1816,9 +1678,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1842,9 +1702,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1868,9 +1726,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1892,9 +1748,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1918,9 +1772,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1944,9 +1796,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1970,9 +1820,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -1996,9 +1844,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2022,9 +1868,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2048,9 +1892,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2075,9 +1917,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2101,9 +1941,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2131,9 +1969,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2155,9 +1991,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2187,9 +2021,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2219,9 +2051,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2251,9 +2081,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2283,9 +2111,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2305,9 +2131,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2327,9 +2151,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2353,9 +2175,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2375,9 +2195,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2397,9 +2215,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2419,9 +2235,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2441,9 +2255,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2463,9 +2275,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2489,9 +2299,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2511,9 +2319,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2533,9 +2339,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2555,9 +2359,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2577,9 +2379,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2604,9 +2404,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2630,9 +2428,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2656,9 +2452,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2678,9 +2472,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2700,9 +2492,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2724,9 +2514,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.092Z",
+    "created_at": "2026-09-13T02:19:23.093Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2756,9 +2544,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2779,9 +2565,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2812,9 +2596,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2842,9 +2624,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2869,9 +2649,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2900,9 +2678,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2930,9 +2706,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2952,9 +2726,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -2982,9 +2754,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3013,9 +2783,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3044,9 +2812,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3074,9 +2840,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3104,9 +2868,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3134,9 +2896,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3164,9 +2924,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3195,9 +2953,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3221,9 +2977,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3243,9 +2997,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3277,9 +3029,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3299,9 +3049,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3321,9 +3069,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3343,9 +3089,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3367,9 +3111,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3389,9 +3131,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3411,9 +3151,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3433,9 +3171,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3455,9 +3191,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3477,9 +3211,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3499,9 +3231,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3521,9 +3251,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3543,9 +3271,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3575,9 +3301,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3601,9 +3325,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3623,9 +3345,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3645,9 +3365,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3667,9 +3385,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3691,9 +3407,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3715,9 +3429,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3737,9 +3449,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3759,9 +3469,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3791,9 +3499,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3817,9 +3523,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3839,9 +3543,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3873,9 +3575,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3906,9 +3606,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3938,9 +3636,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3963,9 +3659,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -3985,9 +3679,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4007,9 +3699,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4029,9 +3719,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4051,9 +3739,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4073,9 +3759,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4098,9 +3782,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4120,9 +3802,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4147,9 +3827,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4177,9 +3855,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4208,9 +3884,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4230,9 +3904,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4252,9 +3924,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4278,9 +3948,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4300,10 +3968,8 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
     "notes": "Name correct?",
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4325,9 +3991,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4349,9 +4013,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4371,9 +4033,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4393,9 +4053,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4415,9 +4073,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4437,9 +4093,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.093Z",
+    "created_at": "2026-09-13T02:19:23.094Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4472,9 +4126,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4494,9 +4146,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4518,9 +4168,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4540,9 +4188,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4566,9 +4212,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4588,9 +4232,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4610,9 +4252,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4637,9 +4277,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4661,9 +4299,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4685,10 +4321,8 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
     "notes": "not a general purpose recycling center",
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4710,10 +4344,8 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
     "notes": "not a general purpose recycling center",
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4733,9 +4365,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4763,9 +4393,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4793,9 +4421,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4826,9 +4452,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4852,9 +4476,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4876,9 +4498,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4904,9 +4524,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4926,9 +4544,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4956,9 +4572,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -4990,9 +4604,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5012,9 +4624,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5045,9 +4655,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5071,9 +4679,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5093,9 +4699,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5119,9 +4723,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5142,9 +4744,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5168,9 +4768,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5192,9 +4790,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5214,9 +4810,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5238,9 +4832,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5276,9 +4868,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5309,9 +4899,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5333,9 +4921,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5357,9 +4943,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5379,9 +4963,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5408,10 +4990,8 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
     "notes": "Strictly for government purpose only, not allowed for illegal occupation",
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5438,9 +5018,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5460,9 +5038,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5488,9 +5064,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5518,9 +5092,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5548,9 +5120,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5571,9 +5141,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5593,9 +5161,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5617,9 +5183,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5643,9 +5207,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5667,9 +5229,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5691,9 +5251,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5713,9 +5271,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5735,9 +5291,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5759,9 +5313,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5781,9 +5333,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5803,9 +5353,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5829,9 +5377,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5862,9 +5408,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5900,9 +5444,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5938,9 +5480,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5964,9 +5504,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -5998,9 +5536,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6034,9 +5570,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6064,9 +5598,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6086,9 +5618,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6108,9 +5638,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6130,9 +5658,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6154,9 +5680,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6191,9 +5715,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6213,9 +5735,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6239,9 +5759,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6261,9 +5779,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6283,9 +5799,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6307,9 +5821,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.094Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6340,9 +5852,7 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
-    "created_at": "2026-09-11T12:59:03.095Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   },
   {
@@ -6364,10 +5874,8 @@ export const SEED_CENTERS: RecyclingCenter[] = [
     "verification_status": "UNVERIFIED",
     "upvote_count": 0,
     "downvote_count": 0,
-    "photo_count": 0,
-    "comment_count": 0,
     "notes": "Household Appliances",
-    "created_at": "2026-09-11T12:59:03.095Z",
+    "created_at": "2026-09-13T02:19:23.095Z",
     "updated_at": "2026-06-26T00:39:20Z"
   }
 ];

@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
     items: searchParams.getAll('items'),
     open_now: searchParams.get('open_now') === 'true',
     verified_only: searchParams.get('verified_only') === 'true',
-    has_photos: searchParams.get('has_photos') === 'true',
     sort: (searchParams.get('sort') as SearchParams['sort']) ?? 'recently_updated',
     lat: searchParams.get('lat') ? parseFloat(searchParams.get('lat')!) : undefined,
     lng: searchParams.get('lng') ? parseFloat(searchParams.get('lng')!) : undefined,

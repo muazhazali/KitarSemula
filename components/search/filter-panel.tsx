@@ -25,7 +25,6 @@ export function FilterPanel({ filters, onChange, resultCount }: FilterPanelProps
     (filters.items?.length ?? 0) > 0 ? 1 : 0,
     filters.open_now ? 1 : 0,
     filters.verified_only ? 1 : 0,
-    filters.has_photos ? 1 : 0,
   ].reduce((a, b) => a + b, 0);
 
   const clearAll = () => {
@@ -34,7 +33,6 @@ export function FilterPanel({ filters, onChange, resultCount }: FilterPanelProps
       items: [],
       open_now: false,
       verified_only: false,
-      has_photos: false,
       sort: 'recently_updated',
     });
   };
@@ -118,18 +116,6 @@ export function FilterPanel({ filters, onChange, resultCount }: FilterPanelProps
           aria-pressed={filters.verified_only}
         >
           Verified Only
-        </button>
-
-        <button
-          onClick={() => onChange({ ...filters, has_photos: !filters.has_photos })}
-          className={`inline-flex h-8 items-center gap-1 rounded-md border px-3 text-xs font-medium transition-colors ${
-            filters.has_photos
-              ? 'bg-primary text-primary-foreground border-primary'
-              : 'bg-background text-foreground border-border hover:bg-muted'
-          }`}
-          aria-pressed={filters.has_photos}
-        >
-          Has Photos
         </button>
 
         {activeFilterCount > 0 && (

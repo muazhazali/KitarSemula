@@ -1,7 +1,6 @@
 export type CenterStatus = 'ACTIVE' | 'CLOSED' | 'TEMPORARILY_CLOSED' | 'UNKNOWN';
 export type VerificationStatus = 'VERIFIED' | 'UNVERIFIED' | 'PENDING';
 export type VoteType = 'UP' | 'DOWN';
-export type SubmissionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
 export type RecyclableCategory =
   | 'Paper'
@@ -86,8 +85,6 @@ export interface RecyclingCenter {
   verification_status: VerificationStatus;
   upvote_count: number;
   downvote_count: number;
-  photo_count: number;
-  comment_count: number;
   notes?: string;
   created_at: string;
   updated_at: string;
@@ -97,32 +94,12 @@ export interface RecyclingCenter {
   thumbnail_url?: string;
 }
 
-export interface Comment {
-  id: string;
-  center_id: string;
-  comment_text: string;
-  submitter_email: string;
-  status: SubmissionStatus;
-  created_at: string;
-}
-
-export interface Photo {
-  id: string;
-  center_id: string;
-  image_url: string;
-  thumbnail_url: string;
-  submitter_email: string;
-  status: SubmissionStatus;
-  created_at: string;
-}
-
 export interface SearchParams {
   q?: string;
   state?: string;
   items?: string[];
   open_now?: boolean;
   verified_only?: boolean;
-  has_photos?: boolean;
   sort?: 'nearest' | 'most_upvoted' | 'recently_updated';
   lat?: number;
   lng?: number;
@@ -136,22 +113,3 @@ export interface SearchResult {
   page: number;
   limit: number;
 }
-
-export type ReportType =
-  | 'CLOSED_PERMANENTLY'
-  | 'WRONG_LOCATION'
-  | 'WRONG_HOURS'
-  | 'WRONG_ITEMS'
-  | 'DUPLICATE'
-  | 'SPAM'
-  | 'OTHER';
-
-export const REPORT_TYPES: { value: ReportType; label: string }[] = [
-  { value: 'CLOSED_PERMANENTLY', label: 'Closed Permanently' },
-  { value: 'WRONG_LOCATION', label: 'Wrong Location' },
-  { value: 'WRONG_HOURS', label: 'Wrong Hours' },
-  { value: 'WRONG_ITEMS', label: 'Does Not Accept Listed Items' },
-  { value: 'DUPLICATE', label: 'Duplicate Entry' },
-  { value: 'SPAM', label: 'Spam' },
-  { value: 'OTHER', label: 'Other' },
-];

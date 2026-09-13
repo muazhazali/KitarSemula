@@ -136,11 +136,6 @@ export function searchCenters(params: SearchParams): RecyclingCenter[] {
     results = results.filter((c) => c.verification_status === 'VERIFIED');
   }
 
-  // Has photos
-  if (params.has_photos) {
-    results = results.filter((c) => c.photo_count > 0);
-  }
-
   // Add distance if lat/lng provided
   if (params.lat != null && params.lng != null) {
     results = results.map((c) => ({

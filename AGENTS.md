@@ -14,9 +14,7 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
 ## Critical gotchas
 
 - **Build ignores TypeScript errors.** `next.config.mjs` sets `typescript.ignoreBuildErrors: true`; `pnpm build` passing does NOT mean code typechecks. Always run `pnpm exec tsc --noEmit`.
-- **Data is in-memory, no database.** Centers come from `lib/seed-data.ts` (`SEED_CENTERS`). Votes (`app/api/centers/[slug]/vote/route.ts`) and comments (`.../comments/route.ts`) use module-level `Map`s that reset on restart. `report` persists nothing — it just validates and returns 201.
-- **Several mutation flows are UI stubs, not wired to APIs.** `add-center-sheet.tsx`, `suggest-edit-dialog.tsx`, and `photo-upload-dialog.tsx` fake success with `setTimeout`. Only vote, comments, and report call real endpoints (`fetch('/api/centers/...')`).
-- Comments are created as `status: 'PENDING'` and `GET` returns only `APPROVED`, so a submitted comment never appears without manual store approval.
+- **Data is in-memory, no database.** Centers come from `lib/seed-data.ts` (`SEED_CENTERS`). Votes (`app/api/centers/[slug]/vote/route.ts`) use a module-level `Map` that resets on restart. **Voting is the only community mutation** — comments, reports, add-center, suggest-edit, and photo upload were intentionally removed; do not reintroduce them without a product decision.
 - **Route handler `params` are async (Next 15+).** Type is `{ params: Promise<{ slug: string }> }` and every handler must `await params` first.
 - **shadcn style `base-nova` uses Base UI (`@base-ui/react`), not Radix.** All `components/ui/*` import primitives from `@base-ui/react/*` (`merge-props`, `use-render`, etc.). Don't add Radix-based snippets.
 - `next.config.mjs` sets `images.unoptimized: true` — don't add `next/image` features that require the optimizer.
@@ -29,11 +27,11 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
 
 - `app/` — App Router.
   - `app/api/centers/route.ts` — search (`GET`, parses query params into `SearchParams`, delegates to `lib/utils/centers.ts#searchCenters`).
-  - `app/api/centers/[slug]/` — `route.ts` (single center), `vote/`, `comments/`, `report/`.
+  - `app/api/centers/[slug]/` — `route.ts` (single center) and `vote/` (only mutation).
   - `app/center/[slug]/page.tsx` — server component; `generateStaticParams` over all seed centers, emits JSON-LD, renders client detail.
   - `app/page.tsx` → `components/home/home-client.tsx` (map + sidebar shell).
 - `lib/` — domain logic.
-  - `lib/types.ts` — shared types AND runtime constants (`RECYCLABLE_CATEGORIES`, `MALAYSIA_STATES`, `REPORT_TYPES`). Import constants from here; don't hardcode strings.
+  - `lib/types.ts` — shared types AND runtime constants (`RECYCLABLE_CATEGORIES`, `MALAYSIA_STATES`). Import constants from here; don't hardcode strings.
   - `lib/seed-data.ts` — single source of center records (generated).
   - `lib/utils/centers.ts` — search/filter/open-now/haversine. Reuse; don't reimplement.
 - `components/` — feature-grouped (`home/`, `centers/`, `map/`, `search/`, `providers/`); `components/ui/` is shadcn-generated.
