@@ -7,13 +7,16 @@ __v0_jsx-dev-runtime.ts
 .vercel/
 
 # Environment variables
+.env
 .env*.local
+
+# Cloudflare local bindings (keep .dev.vars.example committed)
+.dev.vars
 
 # Common ignores
 node_modules
 .next/
 .open-next/
-.dev.vars
 .DS_Store
 
 # Cloudflare generated types
@@ -24,3 +27,7 @@ tsconfig.tsbuildinfo
 
 # Logs
 *.log
+
+.env
+
+.wrangler

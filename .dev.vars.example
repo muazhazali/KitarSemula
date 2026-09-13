@@ -1,0 +1,10 @@
+# Local Cloudflare bindings for `next dev` (read by initOpenNextCloudflareForDev).
+# Copy to `.dev.vars` and fill in. `.dev.vars` is gitignored.
+
+# Secret for Cloudflare Turnstile server-side validation.
+# If unset, verification is skipped (fails open).
+TURNSTILE_SECRET_KEY=
+
+# Optional: public R2 custom domain, e.g. https://photos.kitarsemula.app
+# When unset, photos are served through /api/photos/<id>.
+PHOTO_PUBLIC_BASE_URL=

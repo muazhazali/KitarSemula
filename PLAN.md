@@ -88,12 +88,29 @@ Still open: moving votes to the D1 `votes` table for real server-side dedup (Pha
 
 ## Phase 6 — Deploy + CI
 
-- `wrangler login`, `wrangler d1 create kitarsemula-db`, paste `database_id` into `wrangler.jsonc`.
-- `wrangler r2 bucket create kitarsemula-photos`.
-- `wrangler secret put TURNSTILE_SECRET_KEY`; set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` in the **build** environment (it is inlined at build time), not as a Worker runtime var.
-- `pnpm cf-typegen` after any binding change (regenerates `worker-configuration.d.ts`, which is generated and gitignored).
-- `pnpm deploy`.
-- GitHub Actions workflow using `cloudflare/wrangler-action` (or `pnpm deploy`) with `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`, applying remote migrations before deploy.
+**CI implemented** in `.github/workflows/deploy.yml` (push to `main` or manual dispatch):
+
+1. install (frozen lockfile) → `pnpm cf-typegen` → lint → typecheck
+2. `wrangler d1 migrations apply --remote`
+3. `pnpm deploy`
+
+Required GitHub repo config:
+
+- Secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
+- Variable (optional): `NEXT_PUBLIC_TURNSTILE_SITE_KEY` — read at build time
+
+One-time Cloudflare setup (interactive; run locally):
+
+```
+wrangler login
+wrangler d1 create kitarsemula-db          # paste the id into wrangler.jsonc
+wrangler r2 bucket create kitarsemula-photos
+wrangler secret put TURNSTILE_SECRET_KEY
+```
+
+**Windows caveat:** `opennextjs-cloudflare build` needs symlink permission and fails on native Windows with `EPERM: operation not permitted, symlink` unless Developer Mode is enabled. WSL is not installed on this machine, so CI (Linux) is the supported build path. The `next build` portion succeeds on Windows; only the bundling step fails.
+
+Also required at the repo root: `open-next.config.ts` (OpenNext refuses to build without it).
 
 ## Phase 7 — Photos (R2 + D1)
 

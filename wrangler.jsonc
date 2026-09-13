@@ -15,13 +15,15 @@
     {
       "binding": "DB",
       "database_name": "kitarsemula-db",
-      "database_id": "<REPLACE_WITH_D1_ID>",
+      "database_id": "2ebd829e-6e14-4d76-b8ee-26028737b152",
+      "remote": true,
     },
   ],
   "r2_buckets": [
     {
       "binding": "PHOTOS",
       "bucket_name": "kitarsemula-photos",
+      "remote": true,
     },
   ],
   "ratelimits": [
