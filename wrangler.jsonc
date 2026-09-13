@@ -11,6 +11,13 @@
   "observability": {
     "enabled": true,
   },
+  // Non-secret Turnstile config. TURNSTILE_SECRET_KEY is a Worker secret.
+  // These are the exact frontend hostnames siteverify reports (the hostname of
+  // the page where the challenge was solved), not the widget's domain entries.
+  // localhost is deliberately excluded from the production allowlist.
+  "vars": {
+    "TURNSTILE_HOSTNAMES": "kitarsemula.muaz.app,muaz.app",
+  },
   "d1_databases": [
     {
       "binding": "DB",

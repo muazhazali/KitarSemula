@@ -94,7 +94,8 @@ export interface RecyclingCenter {
   thumbnail_url?: string;
 }
 
-export const MAX_PHOTOS_PER_CENTER = 3;
+export const MAX_PHOTOS_PER_CENTER = 1;
+export const MAX_PHOTO_BYTES = 1 * 1024 * 1024;
 
 export interface CenterPhoto {
   id: string;

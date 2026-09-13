@@ -82,19 +82,27 @@ Two traps worth remembering:
 
 Turnstile (`lib/turnstile.ts` + `components/centers/turnstile-widget.tsx`):
 
-- The photo upload form renders the widget when `NEXT_PUBLIC_TURNSTILE_SITE_KEY` is set; the token is posted as `cf-turnstile-response` alongside the file.
-- The server calls Siteverify (`verifyTurnstile`) and returns 403 on failure. Tokens are single-use and expire after 300s, so the widget is re-rendered after each upload.
-- **Fails open when unconfigured**: if `TURNSTILE_SECRET_KEY` is unset, verification is skipped so local dev and unconfigured deploys stay usable. This means Turnstile is only real protection once both keys are set.
-- Secrets: `wrangler secret put TURNSTILE_SECRET_KEY`. The site key is public and is read from `NEXT_PUBLIC_TURNSTILE_SITE_KEY` **at build time** (Next inlines `NEXT_PUBLIC_*`), so set it in the build environment (CI secret/var or `.env.local` local), not as a Worker runtime var.
+- Widget: sitekey `0x4AAAAAAEyJRNhYjXuZQwjY` (managed mode), domains `127.0.0.1, localhost, muaz.app`.
+- The upload form renders the widget with `action=photo_upload` when `NEXT_PUBLIC_TURNSTILE_SITE_KEY` is set at build time; the token is posted as `cf-turnstile-response`.
+- The server calls Siteverify and requires **`success === true`**, **`action === 'photo_upload'`**, and an approved **`hostname`** (from `TURNSTILE_HOSTNAMES`). Tokens are single-use and expire after 300s, so the widget is re-rendered after each upload.
+- **Fails closed in production**: a missing `TURNSTILE_SECRET_KEY` returns 403; only non-production skips verification.
+- Secret stored via `wrangler secret put TURNSTILE_SECRET_KEY`; verified against Siteverify with a dummy token (returns `invalid-input-response`, not `invalid-input-secret`).
+- `TURNSTILE_HOSTNAMES` is a non-secret `wrangler.jsonc` `vars` entry set to `kitarsemula.muaz.app,muaz.app`. It must contain the **exact** hostname siteverify reports (the page the challenge was solved on), not just the widget's `muaz.app` entry.
+- Live on `https://kitarsemula.muaz.app` (custom domain); the widget registers `muaz.app` which covers its subdomains. Error `600010` is environmental — Cloudflare's own demo fails identically in an automated browser — so validate with a real browser session.
 
 Rate limiting (`lib/rate-limit.ts`, bindings in `wrangler.jsonc`):
 
 - `PHOTO_RATE_LIMITER` — 5 uploads / 60s per IP; 429 + `retry-after: 60` when exceeded.
 - `VOTE_RATE_LIMITER` — 30 votes / 60s per IP.
-- Keyed on `cf-connecting-ip`; also **fails open** when the binding is absent (local dev).
+- Keyed on `cf-connecting-ip`; fails closed in production when the binding is absent.
 - Note: the Cloudflare rate-limit binding is per-colo, so limits are approximate globally.
 
-Still open: moving votes to the D1 `votes` table for real server-side dedup (Phase 2). Rate limiting caps abuse but does not make votes one-per-user.
+Security headers (`middleware.ts`):
+
+- CSP, HSTS, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and `Permissions-Policy` on all SSR/API responses. `public/_headers` only covers static assets (immutable `/_next/static`).
+- CSP keeps `'unsafe-inline'` in `script-src` because Next emits inline bootstrap scripts; tightening to a nonce would be a larger change.
+
+Still open: votes are deduped per IP (Phase 2's `votes` table) but IP is a coarse identity; there is no auth.
 
 ## Phase 6 — Deploy + CI
 

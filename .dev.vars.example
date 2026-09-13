@@ -2,8 +2,16 @@
 # Copy to `.dev.vars` and fill in. `.dev.vars` is gitignored.
 
 # Secret for Cloudflare Turnstile server-side validation.
-# If unset, verification is skipped (fails open).
+# Development: if unset, verification is skipped so local uploads work.
+# Production: if unset, the upload endpoint FAILS CLOSED (403).
+# Set with: wrangler secret put TURNSTILE_SECRET_KEY
 TURNSTILE_SECRET_KEY=
+
+# Comma-separated frontend hostnames accepted by siteverify. Must match the
+# widget's registered domains. Never include localhost here for a production
+# secret; in development leave it empty to skip the hostname check.
+# Production value lives in wrangler.jsonc `vars`.
+TURNSTILE_HOSTNAMES=
 
 # Optional: public R2 custom domain, e.g. https://photos.kitarsemula.app
 # When unset, photos are served through /api/photos/<id>.

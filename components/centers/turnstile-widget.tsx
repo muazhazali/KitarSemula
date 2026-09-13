@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { turnstileSiteKey } from '@/lib/env';
 
 declare global {
   interface Window {
@@ -9,6 +10,7 @@ declare global {
         el: HTMLElement,
         options: {
           sitekey: string;
+          action?: string;
           callback: (token: string) => void;
           'error-callback'?: () => void;
           'expired-callback'?: () => void;
@@ -46,17 +48,20 @@ function loadTurnstileScript(): Promise<void> {
 interface TurnstileWidgetProps {
   /** Called with the token, or null when it expires/errors and must be re-run. */
   onToken: (token: string | null) => void;
+  /** Widget action; must match the server's expected action for this surface. */
+  action?: string;
   className?: string;
 }
 
 /**
  * Renders nothing when NEXT_PUBLIC_TURNSTILE_SITE_KEY is not configured, so
- * local development is not blocked by the challenge.
+ * local development is not blocked by the challenge. In production the key must
+ * be set at build time or uploads will be rejected server-side.
  */
-export function TurnstileWidget({ onToken, className }: TurnstileWidgetProps) {
+export function TurnstileWidget({ onToken, action, className }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const siteKey = turnstileSiteKey();
 
   useEffect(() => {
     if (!siteKey) return;
@@ -67,6 +72,7 @@ export function TurnstileWidget({ onToken, className }: TurnstileWidgetProps) {
         if (cancelled || !containerRef.current || !window.turnstile) return;
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
+          ...(action ? { action } : {}),
           callback: (token) => onToken(token),
           'error-callback': () => onToken(null),
           'expired-callback': () => onToken(null),
@@ -82,7 +88,7 @@ export function TurnstileWidget({ onToken, className }: TurnstileWidgetProps) {
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, onToken]);
+  }, [siteKey, action, onToken]);
 
   if (!siteKey) return null;
 

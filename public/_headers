@@ -1,0 +1,8 @@
+# Headers for static assets served directly by Cloudflare Workers.
+#
+# These rules are NOT applied to Worker/SSR responses — those are set in
+# middleware.ts. Keep both in sync.
+#
+# Next.js fingerprint files under /_next/static are immutable.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS votes (
   PRIMARY KEY (center_slug, voter_key)
 );
 
--- Photos: at most 3 per center, enforced by the (center_slug, slot) unique
+-- Photos: at most 1 per center, enforced by the (center_slug, slot) unique
 -- constraint plus slot CHECK. Slot 0 is the center thumbnail.
 CREATE TABLE IF NOT EXISTS photos (
   id TEXT PRIMARY KEY,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS photos (
   r2_key TEXT NOT NULL UNIQUE,
   content_type TEXT NOT NULL,
   size INTEGER NOT NULL,
-  slot INTEGER NOT NULL CHECK (slot >= 0 AND slot < 3),
+  slot INTEGER NOT NULL CHECK (slot >= 0 AND slot < 1),
   created_at TEXT NOT NULL,
   UNIQUE (center_slug, slot)
 );

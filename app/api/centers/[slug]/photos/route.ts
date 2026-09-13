@@ -4,10 +4,10 @@ import { getAppEnv } from '@/lib/db/client';
 import { insertPhoto, listPhotos } from '@/lib/db/photos';
 import { checkRateLimit, clientKey } from '@/lib/rate-limit';
 import { verifyTurnstile } from '@/lib/turnstile';
-import { MAX_PHOTOS_PER_CENTER } from '@/lib/types';
+import { TURNSTILE_ACTION_PHOTO_UPLOAD, parseHostnames } from '@/lib/env';
+import { MAX_PHOTOS_PER_CENTER, MAX_PHOTO_BYTES } from '@/lib/types';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const MAX_BYTES = 5 * 1024 * 1024;
 
 /** Magic-byte signatures — file.type is attacker-controlled, so verify the bytes. */
 function sniffImageType(bytes: Uint8Array): string | null {
@@ -94,6 +94,10 @@ export async function POST(
   const verification = await verifyTurnstile(
     typeof token === 'string' ? token : null,
     env.TURNSTILE_SECRET_KEY,
+    {
+      expectedAction: TURNSTILE_ACTION_PHOTO_UPLOAD,
+      expectedHostnames: parseHostnames(env.TURNSTILE_HOSTNAMES),
+    },
     request.headers.get('cf-connecting-ip') ?? undefined,
   );
   if (!verification.success) {
@@ -107,8 +111,8 @@ export async function POST(
   if (!(file instanceof File)) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 });
   }
-  if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: 'Image must be 5 MB or smaller' }, { status: 413 });
+  if (file.size > MAX_PHOTO_BYTES) {
+    return NextResponse.json({ error: 'Image must be 1 MB or smaller' }, { status: 413 });
   }
 
   const buffer = new Uint8Array(await file.arrayBuffer());
@@ -125,9 +129,10 @@ export async function POST(
 
   const photo = await insertPhoto(env, slug, r2Key, contentType, buffer.byteLength);
   if (!photo) {
+    // Cap already reached — remove the object we just wrote so it isn't orphaned.
     await env.PHOTOS.delete(r2Key);
     return NextResponse.json(
-      { error: `This center already has the maximum of ${MAX_PHOTOS_PER_CENTER} photos` },
+      { error: `This center already has the maximum of ${MAX_PHOTOS_PER_CENTER} photo` },
       { status: 409 },
     );
   }

@@ -6,8 +6,9 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { CameraIcon, LoaderIcon, UploadIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { MAX_PHOTOS_PER_CENTER } from '@/lib/types';
+import { MAX_PHOTOS_PER_CENTER, MAX_PHOTO_BYTES } from '@/lib/types';
 import type { CenterPhoto } from '@/lib/types';
+import { turnstileSiteKey, TURNSTILE_ACTION_PHOTO_UPLOAD } from '@/lib/env';
 import { TurnstileWidget, TURNSTILE_RESPONSE_FIELD } from './turnstile-widget';
 
 interface PhotosSectionProps {
@@ -21,7 +22,6 @@ interface PhotosResponse {
 }
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
-const MAX_BYTES = 5 * 1024 * 1024;
 
 async function fetchPhotos(slug: string): Promise<PhotosResponse> {
   const res = await fetch(`/api/centers/${slug}/photos`);
@@ -35,7 +35,7 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
   const [uploading, setUploading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [widgetKey, setWidgetKey] = useState(0);
-  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+  const turnstileRequired = Boolean(turnstileSiteKey());
 
   const { data, isLoading } = useQuery({
     queryKey: ['photos', slug],
@@ -57,8 +57,8 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
       toast.error('Only JPEG, PNG, or WebP images are allowed.');
       return;
     }
-    if (file.size > MAX_BYTES) {
-      toast.error('Image must be 5 MB or smaller.');
+    if (file.size > MAX_PHOTO_BYTES) {
+      toast.error('Image must be 1 MB or smaller.');
       return;
     }
     if (turnstileRequired && !turnstileToken) {
@@ -108,7 +108,13 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
           className="hidden"
           onChange={(e) => handleFile(e.target.files?.[0])}
         />
-        {remaining > 0 && <TurnstileWidget key={widgetKey} onToken={handleToken} />}
+        {remaining > 0 && (
+          <TurnstileWidget
+            key={widgetKey}
+            action={TURNSTILE_ACTION_PHOTO_UPLOAD}
+            onToken={handleToken}
+          />
+        )}
         <Button
           variant="outline"
           size="sm"

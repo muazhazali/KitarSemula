@@ -28,6 +28,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   object.writeHttpMetadata(headers);
   headers.set('etag', object.httpEtag);
   headers.set('cache-control', 'public, max-age=31536000, immutable');
+  // Defence in depth: the stored content type is set from sniffed bytes, but
+  // never let a browser reinterpret the response as another type.
+  headers.set('x-content-type-options', 'nosniff');
+  headers.set('content-security-policy', "default-src 'none'; img-src 'self'; sandbox");
+  headers.set('content-disposition', 'inline');
 
   return new Response(object.body, { headers });
 }
