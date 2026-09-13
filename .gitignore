@@ -12,7 +12,12 @@ __v0_jsx-dev-runtime.ts
 # Common ignores
 node_modules
 .next/
+.open-next/
+.dev.vars
 .DS_Store
+
+# Cloudflare generated types
+worker-configuration.d.ts
 
 # Build cache
 tsconfig.tsbuildinfo

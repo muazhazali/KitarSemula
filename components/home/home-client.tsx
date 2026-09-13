@@ -34,7 +34,7 @@ async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
 
   const res = await fetch(url.toString());
   if (!res.ok) throw new Error('Failed to fetch centers');
-  const data = await res.json();
+  const data = (await res.json()) as { centers: RecyclingCenter[] };
   return data.centers;
 }
 

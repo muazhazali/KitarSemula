@@ -5,6 +5,8 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
 ## Commands
 
 - `pnpm dev` / `pnpm build` / `pnpm start` — dev (Turbopack), production build, serve build.
+- `pnpm preview` / `pnpm deploy` — build via `opennextjs-cloudflare` and run locally / deploy to Cloudflare Workers.
+- `pnpm cf-typegen` — regenerate `worker-configuration.d.ts` from `wrangler.jsonc`. Required before typechecking after any binding change; the file is generated and gitignored.
 - `pnpm lint` — ESLint flat config (`eslint.config.mjs`, `eslint-config-next` + `eslint-config-prettier`).
 - `pnpm lint:fix` / `pnpm format` / `pnpm format:check` — autofix and Prettier.
 - **No test suite exists.** Do not invent test commands.
@@ -14,7 +16,11 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
 ## Critical gotchas
 
 - **Build ignores TypeScript errors.** `next.config.mjs` sets `typescript.ignoreBuildErrors: true`; `pnpm build` passing does NOT mean code typechecks. Always run `pnpm exec tsc --noEmit`.
-- **Data is in-memory, no database.** Centers come from `lib/seed-data.ts` (`SEED_CENTERS`). Votes (`app/api/centers/[slug]/vote/route.ts`) use a module-level `Map` that resets on restart. **Voting is the only community mutation** — comments, reports, add-center, suggest-edit, and photo upload were intentionally removed; do not reintroduce them without a product decision.
+- **Data is in-memory, no database.** Centers come from `lib/seed-data.ts` (`SEED_CENTERS`). Votes (`app/api/centers/[slug]/vote/route.ts`) use a module-level `Map` that resets on restart. **Voting is the only in-memory mutation.** Cloudflare D1/R2 code paths (`lib/db/`, `migrations/`, photos) exist for the planned Workers deploy and are not yet the runtime source of truth — see `PLAN.md`.
+- **Photos are capped at 3 per center.** The cap is enforced atomically in `lib/db/photos.ts#insertPhoto` (D1 `UNIQUE (center_slug, slot)` + `slot < 3`); the API returns 409 when full. Bytes live in R2 (`PHOTOS` binding), metadata in D1.
+- **The photo proxy route is `/api/photos/[id]`** (keyed by photo id), but `resolvePhotoUrl` points at `PHOTO_PUBLIC_BASE_URL/<r2Key>` when that env var is set. Don't change one without the other.
+- **Public photo delete was intentionally not implemented.** Don't add an unauthenticated DELETE.
+- **`worker-configuration.d.ts` is generated** (`pnpm cf-typegen`) and gitignored. It defines `D1Database`/`R2Bucket`; regenerate after editing `wrangler.jsonc` or typecheck breaks. It also makes `res.json()` return `unknown`, so fetch call sites must cast.
 - **Route handler `params` are async (Next 15+).** Type is `{ params: Promise<{ slug: string }> }` and every handler must `await params` first.
 - **shadcn style `base-nova` uses Base UI (`@base-ui/react`), not Radix.** All `components/ui/*` import primitives from `@base-ui/react/*` (`merge-props`, `use-render`, etc.). Don't add Radix-based snippets.
 - `next.config.mjs` sets `images.unoptimized: true` — don't add `next/image` features that require the optimizer.
@@ -27,13 +33,16 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
 
 - `app/` — App Router.
   - `app/api/centers/route.ts` — search (`GET`, parses query params into `SearchParams`, delegates to `lib/utils/centers.ts#searchCenters`).
-  - `app/api/centers/[slug]/` — `route.ts` (single center) and `vote/` (only mutation).
+  - `app/api/centers/[slug]/` — `route.ts` (single center), `vote/` (in-memory), `photos/` (R2+D1).
+  - `app/api/photos/[id]/route.ts` — R2 proxy used when no public photo domain is set.
   - `app/center/[slug]/page.tsx` — server component; `generateStaticParams` over all seed centers, emits JSON-LD, renders client detail.
   - `app/page.tsx` → `components/home/home-client.tsx` (map + sidebar shell).
 - `lib/` — domain logic.
   - `lib/types.ts` — shared types AND runtime constants (`RECYCLABLE_CATEGORIES`, `MALAYSIA_STATES`). Import constants from here; don't hardcode strings.
   - `lib/seed-data.ts` — single source of center records (generated).
   - `lib/utils/centers.ts` — search/filter/open-now/haversine. Reuse; don't reimplement.
+  - `lib/db/client.ts` — `getAppEnv()` returns Cloudflare bindings or `null` when unavailable (returns 503, never throws).
+  - `lib/db/photos.ts` — D1 photo metadata + `resolvePhotoUrl`; `migrations/` holds SQL.
 - `components/` — feature-grouped (`home/`, `centers/`, `map/`, `search/`, `providers/`); `components/ui/` is shadcn-generated.
 
 ## Conventions

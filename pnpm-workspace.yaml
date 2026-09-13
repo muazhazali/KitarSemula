@@ -1,7 +1,9 @@
 allowBuilds:
+  esbuild: true
   msw: false
   sharp: false
   unrs-resolver: true
+  workerd: true
 
 overrides:
   hono: 4.12.25

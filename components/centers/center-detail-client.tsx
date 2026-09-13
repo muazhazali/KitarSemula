@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { VoteButtons } from './vote-buttons';
 import { OpeningHoursTable } from './opening-hours';
+import { PhotosSection } from './photos-section';
 import type { RecyclingCenter } from '@/lib/types';
 import { isOpenNow, getTodayHours } from '@/lib/utils/centers';
 
@@ -260,6 +261,11 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
             </section>
           </>
         )}
+
+        <Separator />
+
+        {/* Photos */}
+        <PhotosSection slug={center.slug} centerName={center.name} />
 
         <Separator />
 

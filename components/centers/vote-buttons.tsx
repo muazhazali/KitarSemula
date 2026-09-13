@@ -31,7 +31,7 @@ export function VoteButtons({ slug, initialUpvotes, initialDownvotes }: VoteButt
         body: JSON.stringify({ type }),
       });
       if (!res.ok) throw new Error();
-      const data = await res.json();
+      const data = (await res.json()) as { upvote_count: number; downvote_count: number };
       setUpvotes(data.upvote_count);
       setDownvotes(data.downvote_count);
       setVoted(type);

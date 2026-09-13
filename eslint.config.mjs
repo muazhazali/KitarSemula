@@ -6,7 +6,14 @@ const nextConfigs = /** @type {import('eslint').Linter.Config[]} */ (/** @type {
 /** @type {import('eslint').Linter.Config[]} */
 const config = [
   {
-    ignores: ['node_modules/**', '.next/**', 'pnpm-lock.yaml', 'dev-server*.log'],
+    ignores: [
+      'node_modules/**',
+      '.next/**',
+      '.open-next/**',
+      'pnpm-lock.yaml',
+      'dev-server*.log',
+      'worker-configuration.d.ts',
+    ],
   },
   ...nextConfigs,
   prettier,

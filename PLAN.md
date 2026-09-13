@@ -1,12 +1,15 @@
-# Deploy KitarSemula.app to Cloudflare (Workers + D1)
+# Deploy KitarSemula.app to Cloudflare (Workers + D1 + R2)
 
-Goal: run the Next.js 16 app on **Cloudflare Workers** (static assets + SSR via an adapter) with **D1** for all mutable data (centers, votes, comments, reports) and **Turnstile** for abuse protection. Local `next dev` keeps working; `pnpm preview` runs the real workerd build.
+Goal: run the Next.js 16 app on **Cloudflare Workers** (static assets + SSR via an adapter) with **D1** for all mutable data (centers, votes, photos metadata) and **R2** for photo bytes. Local `next dev` keeps working; `pnpm preview` runs the real workerd build.
+
+> Community scope is **votes + photo upload only**. Comments, reports, add-center, and suggest-edit were removed by product decision — do not reintroduce them.
 
 ## Decisions to make first
 
 1. **Adapter: `vinext` vs `@opennextjs/cloudflare`.**
-   Cloudflare now recommends **vinext** for *new* Next.js apps and treats OpenNext as the maintenance path. vinext reimplements the Next 16 API on Vite (~94% coverage, experimental). OpenNext adapts `next build` output and is battle-tested.
+   Cloudflare now recommends **vinext** for _new_ Next.js apps and treats OpenNext as the maintenance path. vinext reimplements the Next 16 API on Vite (~94% coverage, experimental). OpenNext adapts `next build` output and is battle-tested.
    **Recommendation:** run `npx vinext check`, and if it reports few/no gaps adopt vinext; otherwise use OpenNext. Either way the D1/data-layer work below is identical.
+   **Status:** OpenNext (`@opennextjs/cloudflare`) is already installed and `wrangler.jsonc` is scaffolded against it.
 2. **Do centers live in D1, or stay a build-time snapshot?**
    Putting them in D1 is needed for a real directory (edits, approvals, no rebuild to update). That means `generateStaticParams` can no longer read them synchronously — see Phase 3.
 3. **Keep `images.unoptimized: true`?** Keep it for now; enabling Cloudflare Images is a separate, optional step.
@@ -32,12 +35,10 @@ Goal: run the Next.js 16 app on **Cloudflare Workers** (static assets + SSR via 
 Create `migrations/0001_init.sql`:
 
 - `centers` — all `RecyclingCenter` fields; `accepted_items`, `tags`, `opening_hours` stored as JSON `TEXT`; index on `state`, `updated_at`, `slug UNIQUE`.
-- `votes` — `(center_id, voter_key, type, created_at, UNIQUE(center_id, voter_key))`. This also fixes the current gap where dedup is client-only; keep `upvote_count`/`downvote_count` on `centers` or compute from the table.
-- `comments` — `(id, center_id, comment_text, submitter_email, status, created_at)`.
-- `reports` — persists now instead of the current no-op.
-- (Optional later) `submissions`, `photos` for the three stub flows.
+- `votes` — `(center_slug, voter_key, type, created_at, PK(center_slug, voter_key))`. This also fixes the current gap where dedup is client-only; keep `upvote_count`/`downvote_count` on `centers` or compute from the table.
+- `photos` — see Phase 7 (implemented).
 
-**Critical structural change:** `lib/utils/centers.ts` is imported by client components (`center-detail-client.tsx:31`) *and* imports `SEED_CENTERS`. D1 access is server-only, so:
+**Critical structural change:** `lib/utils/centers.ts` is imported by client components (`center-detail-client.tsx:31`) _and_ imports `SEED_CENTERS`. D1 access is server-only, so:
 
 - Keep `isOpenNow`, `getTodayHours`, `getDistanceKm`, `formatDistance`, `getMarkerColor`, `getStatusLabel` in `lib/utils/centers.ts` (pure, client-safe).
 - Move `searchCenters`/`getCenterBySlug` to new server-only `lib/db/*` (D1 prepared statements), plus `lib/db/client.ts` using `getCloudflareContext()` (and the `async: true` variant for prerendered routes).
@@ -49,7 +50,7 @@ Create `migrations/0001_init.sql`:
 Call sites that become `await`/D1-backed:
 
 - `app/api/centers/route.ts` — `searchCenters` → SQL (`LIKE` for `q`, filters, sort, `LIMIT/OFFSET`); `distance_km` computed after fetch.
-- `app/api/centers/[slug]/route.ts`, `vote/route.ts`, `comments/route.ts`, `report/route.ts` — D1 reads/writes; keep the zod schemas, `await params`, and status codes.
+- `app/api/centers/[slug]/route.ts`, `vote/route.ts` — D1 reads/writes; keep the zod schemas, `await params`, and status codes.
 - `app/center/[slug]/page.tsx` — `generateStaticParams` must no longer read D1 synchronously at build. Recommended: keep a generated **slug-only** list for `generateStaticParams`, and fetch the full center from D1 at request time (dynamic/ISR). Keep `generateMetadata` and JSON-LD, both now async. Alternative: use remote D1 bindings during build to prerender all 246 pages, accepting that center edits need a redeploy.
 
 ## Phase 4 — Seed + local dev
@@ -63,21 +64,66 @@ Call sites that become `await`/D1-backed:
 
 - `pnpm dev` for fast iteration; `pnpm preview` to catch workerd-only breakage.
 - Note: `recycling_centres_malaysia_v2_enriched.csv` is untracked — either commit it or keep `lib/seed-data.ts` as the seed source so CI can seed.
+- R2 needs a real binding; `next dev` without `initOpenNextCloudflareForDev()` will make `getAppEnv()` return null and photo routes answer 503.
 
 ## Phase 5 — Abuse protection
 
-Wire the three existing Turnstile placeholders (`comments-section.tsx:124`, `report-dialog.tsx:129`, and the stubs) to a real widget; add server-side `siteverify` in a shared `lib/turnstile.ts` reading `env.TURNSTILE_SECRET_KEY`, with the site key via `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. Store secrets with `wrangler secret put`.
+Add rate limiting and Turnstile to the **photo upload** endpoint (`app/api/centers/[slug]/photos/route.ts`) — public upload is the highest-risk surface. Server-side `siteverify` goes in a shared `lib/turnstile.ts` reading `env.TURNSTILE_SECRET_KEY`, with the site key via `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. Store secrets with `wrangler secret put`. The vote endpoint should also be rate-limited and moved to the server-side `votes` table (see Phase 2) so one client cannot inflate counts.
 
 ## Phase 6 — Deploy + CI
 
-- `wrangler login`, `wrangler d1 create kitarsemula-db`, paste `database_id`.
+- `wrangler login`, `wrangler d1 create kitarsemula-db`, paste `database_id` into `wrangler.jsonc`.
+- `wrangler r2 bucket create kitarsemula-photos`.
+- `pnpm cf-typegen` after any binding change (regenerates `worker-configuration.d.ts`, which is generated and gitignored).
 - `pnpm deploy`.
 - GitHub Actions workflow using `cloudflare/wrangler-action` (or `pnpm deploy`) with `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`, applying remote migrations before deploy.
+
+## Phase 7 — Photos (R2 + D1)
+
+**Implemented.** Design: bytes in R2, metadata in D1, hard cap of **3 photos per center**.
+
+Data model (`migrations/0001_init.sql`):
+
+```sql
+CREATE TABLE photos (
+  id TEXT PRIMARY KEY,
+  center_slug TEXT NOT NULL,
+  r2_key TEXT NOT NULL UNIQUE,
+  content_type TEXT NOT NULL,
+  size INTEGER NOT NULL,
+  slot INTEGER NOT NULL CHECK (slot >= 0 AND slot < 3),
+  created_at TEXT NOT NULL,
+  UNIQUE (center_slug, slot)
+);
+```
+
+- `UNIQUE (center_slug, slot)` + the `slot` CHECK is what enforces the 3-photo cap at the database level.
+- The cap is enforced atomically in one statement (`lib/db/photos.ts#insertPhoto`): the INSERT...SELECT only fires when `COUNT(*) < 3`, and slot is the current count. Concurrent uploads cannot exceed the cap; the loser gets 409.
+- Slot 0 is intended as the center thumbnail.
+
+Storage/serving:
+
+- Binding `PHOTOS` (R2 bucket `kitarsemula-photos`) in `wrangler.jsonc`.
+- `PHOTO_PUBLIC_BASE_URL` (optional env var): when set to an R2 custom domain (e.g. `https://photos.kitarsemula.app`), `resolvePhotoUrl` links straight at the object. Otherwise it falls back to `/api/photos/<id>`, a Worker route that streams the private object with a 1-year immutable cache header.
+
+API:
+
+- `app/api/centers/[slug]/photos/route.ts`
+  - `GET` → `{ photos, max }` for the center.
+  - `POST` → multipart `file`. Validates size (≤5 MB) and **sniffs magic bytes** for JPEG/PNG/WebP rather than trusting `file.type`. Returns 201, or 409 when the cap is hit (and deletes the just-uploaded R2 object in that case).
+- `app/api/photos/[id]/route.ts` — `GET` streams the object (proxy mode only).
+
+UI: `components/centers/photos-section.tsx`, rendered by `center-detail-client.tsx`. Shows `n/3`, an upload button disabled at the limit, and uses TanStack Query to refresh after upload.
+
+Deliberately **not** included: public delete. Unauthenticated deletion would let anyone wipe a center's photos; add it behind auth if needed. `lib/db/photos.ts#deletePhoto` was removed for the same reason.
+
+`lib/db/client.ts#getAppEnv()` returns `null` when bindings are unavailable (e.g. `next dev` without the adapter init), so routes answer 503 instead of crashing.
 
 ## Gotchas
 
 - `next.config.mjs` sets `ignoreBuildErrors: true` — keep running `pnpm exec tsc --noEmit`; the adapter won't catch type errors either.
-- Comments are still created `PENDING` and `GET` returns only `APPROVED`, so nothing user-submitted shows up without an approval path. D1 makes a simple admin approval query feasible; decide this explicitly.
+- `worker-configuration.d.ts` is generated by `pnpm cf-typegen` and gitignored. Rerun it after changing bindings, or `D1Database`/`R2Bucket` will be undefined in typecheck.
+- Adding the Workers ambient types (`worker-configuration.d.ts`) makes `Response.json()` return `unknown`, so `res.json()` call sites need explicit casts. Existing ones were fixed; new fetches must do the same.
 - `crypto.randomUUID()` is fine on Workers.
 - Confirm Next **16.2.9** ↔ chosen adapter version compatibility before committing to it (OpenNext tracks newer 16.x releases closely).
 - OpenNext's Windows dev support has historically been partial — verify `pnpm preview` locally early.
@@ -89,5 +135,6 @@ Wire the three existing Turnstile placeholders (`comments-section.tsx:124`, `rep
 3. Split pure utils from server-only `lib/db`.
 4. Rewire routes/pages.
 5. Seed.
-6. Turnstile.
-7. CI deploy.
+6. Photos (Phase 7) — done.
+7. Turnstile + rate limiting.
+8. CI deploy.

@@ -27,20 +27,22 @@ Source: `components/map/recycling-map.tsx`
 Source: `app/center/[slug]/page.tsx`
 
 - Per-center metadata and JSON-LD `LocalBusiness`.
-- Display address, today's hours, full opening-hours table, accepted items, tags, notes, and status/verification badges.
+- Display address, today's hours, full opening-hours table, accepted items, tags, notes, photos, and status/verification badges.
 - `generateStaticParams` over all centers (246 currently).
 
 ### Community contributions
 
-- Vote up/down with live counts (`app/api/centers/[slug]/vote/route.ts`) — the **only** community mutation.
-- Comments, issue reports, add-center, suggest-edit, and photo upload are intentionally **out of scope** and removed. Do not reintroduce without a product decision.
+- Vote up/down with live counts (`app/api/centers/[slug]/vote/route.ts`). Client-side only one vote per page load; not yet server-side deduped.
+- **Photo upload**, up to **3 per center** (`app/api/centers/[slug]/photos/route.ts`). JPEG/PNG/WebP, ≤5 MB, validated by magic bytes. Bytes in R2 (`PHOTOS` binding), metadata in D1 (`photos`). Deleting photos is intentionally not exposed publicly.
+- Comments, issue reports, add-center, suggest-edit are intentionally **out of scope** and removed. Do not reintroduce without a product decision.
 
 ## Non-functional requirements
 
 - **Persistence / durability** — must move the vote store off its module-level `Map` (resets on restart). This is the core driver for D1.
 - **Performance** — search is O(n) over 246 records per request with no cache; D1 + indexes + edge delivery should hold or improve TTFB. `distance_km` is computed per request when lat/lng are provided.
-- **Scalability** — reads dominate; write volume is low (votes only). D1 read replication covers it.
-- **Security** — zod validation on the vote endpoint; **no Turnstile, bot protection, or auth currently exists**; vote dedup is client-only (`vote-buttons.tsx` tracks local `voted` state, no server-side voter identity).
+- **Scalability** — reads dominate; write volume is low (votes, photos). D1 read replication covers it; R2 has effectively unbounded capacity.
+- **Security** — zod-like validation plus magic-byte sniffing on photo upload; **no Turnstile, rate limiting, auth, or bot protection currently exists**; vote dedup is client-only (`vote-buttons.tsx` tracks local `voted` state, no server-side voter identity).
+- **Media** — max 3 photos per center, ≤5 MB each, JPEG/PNG/WebP only; bytes in R2, metadata in D1; images served unoptimized.
 - **Correctness gates** — `typescript.ignoreBuildErrors: true`, no test suite; verification is `pnpm lint` + `pnpm exec tsc --noEmit`. The adapter build will not catch type errors either.
 - **SEO / shareability** — metadata templates, per-center OpenGraph, JSON-LD, static generation.
 - **Accessibility** — ARIA labels, `aria-pressed` / `aria-expanded`, semantic landmarks throughout.
@@ -51,5 +53,6 @@ Source: `app/center/[slug]/page.tsx`
 ## Requirement gaps exposed by the deploy
 
 - No server-side vote dedup; votes are anonymous and unauthenticated (a single client can vote once per page load, and the `Map` resets on restart).
-- No rate limiting or bot protection on the vote endpoint.
+- No rate limiting or bot protection on the vote **or photo upload** endpoints. Public uploads can fill the R2 bucket; this is the highest-risk gap.
+- `centers` are still read from `lib/seed-data.ts`, so photo uploads reference seed slugs while the D1 `centers` table is not yet the runtime source of truth.
 - No automated tests.
