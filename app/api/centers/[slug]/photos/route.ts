@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCenterBySlug } from '@/lib/utils/centers';
+import { getCenterBySlug } from '@/lib/db/centers';
 import { getAppEnv } from '@/lib/db/client';
 import { insertPhoto, listPhotos } from '@/lib/db/photos';
 import { checkRateLimit, clientKey } from '@/lib/rate-limit';
@@ -65,14 +65,14 @@ export async function POST(
 ) {
   const { slug } = await params;
 
-  const center = getCenterBySlug(slug);
-  if (!center) {
-    return NextResponse.json({ error: 'Center not found' }, { status: 404 });
-  }
-
   const env = getAppEnv();
   if (!env) {
     return NextResponse.json({ error: 'Photo storage is not configured' }, { status: 503 });
+  }
+
+  const center = await getCenterBySlug(env, slug);
+  if (!center) {
+    return NextResponse.json({ error: 'Center not found' }, { status: 404 });
   }
 
   const limit = await checkRateLimit(env.PHOTO_RATE_LIMITER, clientKey(request, 'photo'));

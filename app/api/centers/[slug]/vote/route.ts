@@ -1,36 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCenterBySlug } from '@/lib/utils/centers';
+import { getCenterBySlug } from '@/lib/db/centers';
 import { getAppEnv } from '@/lib/db/client';
 import { checkRateLimit, clientKey } from '@/lib/rate-limit';
+import { recordVote } from '@/lib/db/votes';
 import { z } from 'zod';
 
 const voteSchema = z.object({
   type: z.enum(['UP', 'DOWN']),
 });
 
-// In-memory vote store (resets on server restart — swap for D1 on Cloudflare)
-const voteStore = new Map<string, { up: number; down: number }>();
-
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const center = getCenterBySlug(slug);
 
+  const env = getAppEnv();
+  if (!env) {
+    return NextResponse.json({ error: 'Database is not configured' }, { status: 503 });
+  }
+
+  const center = await getCenterBySlug(env, slug);
   if (!center) {
     return NextResponse.json({ error: 'Center not found' }, { status: 404 });
   }
 
-  const env = getAppEnv();
-  if (env) {
-    const limit = await checkRateLimit(env.VOTE_RATE_LIMITER, clientKey(request, 'vote'));
-    if (!limit.allowed) {
-      return NextResponse.json(
-        { error: 'Too many votes. Please slow down.' },
-        { status: 429, headers: { 'retry-after': '60' } },
-      );
-    }
+  const limit = await checkRateLimit(env.VOTE_RATE_LIMITER, clientKey(request, 'vote'));
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many votes. Please slow down.' },
+      { status: 429, headers: { 'retry-after': '60' } },
+    );
   }
 
   let body: unknown;
@@ -45,17 +45,7 @@ export async function POST(
     return NextResponse.json({ error: 'Invalid vote type' }, { status: 422 });
   }
 
-  const current = voteStore.get(slug) ?? {
-    up: center.upvote_count,
-    down: center.downvote_count,
-  };
-
-  if (parsed.data.type === 'UP') {
-    voteStore.set(slug, { ...current, up: current.up + 1 });
-  } else {
-    voteStore.set(slug, { ...current, down: current.down + 1 });
-  }
-
-  const updated = voteStore.get(slug)!;
-  return NextResponse.json({ upvote_count: updated.up, downvote_count: updated.down });
+  // One vote per IP per center, enforced by the votes table primary key.
+  const counts = await recordVote(env, slug, clientKey(request, 'voter'), parsed.data.type);
+  return NextResponse.json(counts);
 }

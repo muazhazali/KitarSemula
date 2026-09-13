@@ -20,6 +20,7 @@ import type {
 
 const CSV_PATH = join(process.cwd(), 'recycling_centres_malaysia_v2_enriched.csv');
 const OUT_PATH = join(process.cwd(), 'lib/seed-data.ts');
+const SLUGS_OUT_PATH = join(process.cwd(), 'lib/center-slugs.ts');
 
 // ---------------------------------------------------------------------------
 // CSV parser (RFC-4180-ish, handles quoted fields with embedded commas)
@@ -73,23 +74,23 @@ function parseCSV(text: string): string[][] {
 // ---------------------------------------------------------------------------
 const STATE_ALIASES: Record<string, string> = {
   'kuala lumpur': 'Kuala Lumpur',
-  'selangor': 'Selangor',
-  'penang': 'Penang',
+  selangor: 'Selangor',
+  penang: 'Penang',
   'pulau pinang': 'Penang',
-  'johor': 'Johor',
-  'perak': 'Perak',
-  'melaka': 'Melaka',
-  'malacca': 'Melaka',
+  johor: 'Johor',
+  perak: 'Perak',
+  melaka: 'Melaka',
+  malacca: 'Melaka',
   'negeri sembilan': 'Negeri Sembilan',
-  'pahang': 'Pahang',
-  'kedah': 'Kedah',
-  'kelantan': 'Kelantan',
-  'terengganu': 'Terengganu',
-  'perlis': 'Perlis',
-  'sabah': 'Sabah',
-  'sarawak': 'Sarawak',
-  'putrajaya': 'Putrajaya',
-  'labuan': 'Labuan',
+  pahang: 'Pahang',
+  kedah: 'Kedah',
+  kelantan: 'Kelantan',
+  terengganu: 'Terengganu',
+  perlis: 'Perlis',
+  sabah: 'Sabah',
+  sarawak: 'Sarawak',
+  putrajaya: 'Putrajaya',
+  labuan: 'Labuan',
 };
 
 function normalizeState(raw: string): string {
@@ -129,7 +130,10 @@ const ITEM_MAP: Record<string, RecyclableCategory> = {
 
 function mapAcceptedItems(raw: string): RecyclableCategory[] {
   if (!raw) return [];
-  const items = raw.split('|').map((s) => s.trim()).filter(Boolean);
+  const items = raw
+    .split('|')
+    .map((s) => s.trim())
+    .filter(Boolean);
   const mapped: RecyclableCategory[] = [];
   const seen = new Set<RecyclableCategory>();
   for (const item of items) {
@@ -148,7 +152,10 @@ function mapAcceptedItems(raw: string): RecyclableCategory[] {
 // ---------------------------------------------------------------------------
 function cleanTags(raw: string): string[] {
   if (!raw) return [];
-  const tags = raw.split('|').map((s) => s.trim()).filter(Boolean);
+  const tags = raw
+    .split('|')
+    .map((s) => s.trim())
+    .filter(Boolean);
   const cleaned: string[] = [];
   const seen = new Set<string>();
   for (let tag of tags) {
@@ -157,9 +164,15 @@ function cleanTags(raw: string): string[] {
     // Skip generic noise
     const lower = tag.toLowerCase();
     if (
-      ['container', 'centre', 'center', 'bin/container', 'drop-off', 'private scrapyard', 'e-waste'].includes(
-        lower,
-      )
+      [
+        'container',
+        'centre',
+        'center',
+        'bin/container',
+        'drop-off',
+        'private scrapyard',
+        'e-waste',
+      ].includes(lower)
     ) {
       continue;
     }
@@ -172,7 +185,10 @@ function cleanTags(raw: string): string[] {
     // Skip Chinese-only tags (keep mixed/English)
     if (/[\u4e00-\u9fff]/.test(tag) && !/[a-zA-Z]/.test(tag)) continue;
     // Skip OSM metadata
-    if (/^(reverse_geocoded|website_fetch_error|osm_source|website_phone|classification)/i.test(tag)) continue;
+    if (
+      /^(reverse_geocoded|website_fetch_error|osm_source|website_phone|classification)/i.test(tag)
+    )
+      continue;
     // Skip very long tags (likely noise)
     if (tag.length > 60) continue;
     const key = tag.toLowerCase();
@@ -275,13 +291,18 @@ function parseOpeningHours(raw: string): OpeningHours {
   }
 
   // Split on ";" for multiple rules, take the first (ignore "PH off" etc.)
-  const rules = value.split(';').map((r) => r.trim()).filter(Boolean);
+  const rules = value
+    .split(';')
+    .map((r) => r.trim())
+    .filter(Boolean);
   for (const rule of rules) {
     // Skip "PH off", "PH open", etc.
     if (/^(ph|public holiday)/i.test(rule)) continue;
 
     // Match "Mo-Sa 09:00-18:00" or "Mo 09:00-18:00" or "Mo-Fr 08:00-12:00,13:00-17:00"
-    const dayTimeMatch = rule.match(/^([A-Za-z]{2}(?:-[A-Za-z]{2})?(?:,[A-Za-z]{2}(?:-[A-Za-z]{2})?)*)\s+(.+)$/);
+    const dayTimeMatch = rule.match(
+      /^([A-Za-z]{2}(?:-[A-Za-z]{2})?(?:,[A-Za-z]{2}(?:-[A-Za-z]{2})?)*)\s+(.+)$/,
+    );
     if (!dayTimeMatch) continue;
 
     const days = expandDayRange(dayTimeMatch[1]);
@@ -316,7 +337,7 @@ function cleanPhone(raw: string): string | undefined {
   // Must contain at least some digits and not look like a URL
   if (/^https?:\/\//i.test(trimmed)) return undefined;
   // A phone should be mostly digits, spaces, +, -, ()
-  if (!/^\+?[\d\s\-()]{6,}$/ .test(trimmed)) return undefined;
+  if (!/^\+?[\d\s\-()]{6,}$/.test(trimmed)) return undefined;
   return trimmed;
 }
 
@@ -459,6 +480,17 @@ function main() {
 
   writeFileSync(OUT_PATH, output, 'utf-8');
   console.log(`Wrote ${centers.length} centers to ${OUT_PATH}`);
+
+  // Slugs-only list, used by generateStaticParams at build time (the D1 binding
+  // may not be reachable during the build).
+  const slugOutput = `// Generated by scripts/convert-csv.ts — do not edit by hand.\n\nexport const CENTER_SLUGS: string[] = ${JSON.stringify(
+    centers.map((c) => c.slug),
+    null,
+    2,
+  )};\n`;
+  writeFileSync(SLUGS_OUT_PATH, slugOutput, 'utf-8');
+  console.log(`Wrote ${centers.length} slugs to ${SLUGS_OUT_PATH}`);
+
   console.log(`Skipped ${skipped} rows (missing coords or name)`);
 }
 

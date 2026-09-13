@@ -1,5 +1,4 @@
-import type { RecyclingCenter, CenterStatus, SearchParams } from '../types';
-import { SEED_CENTERS } from '../seed-data';
+import type { RecyclingCenter, CenterStatus } from '../types';
 
 /**
  * Haversine formula to calculate distance between two coordinates (in km)
@@ -93,76 +92,4 @@ export function getTodayHours(center: RecyclingCenter): string {
   const now = new Date();
   const dayKey = days[now.getDay()];
   return center.opening_hours[dayKey] ?? 'Closed today';
-}
-
-export function searchCenters(params: SearchParams): RecyclingCenter[] {
-  let results = [...SEED_CENTERS];
-
-  // Text search
-  if (params.q) {
-    const q = params.q.toLowerCase().trim();
-    results = results.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.address.toLowerCase().includes(q) ||
-        c.state.toLowerCase().includes(q) ||
-        c.area.toLowerCase().includes(q) ||
-        c.tags.some((t) => t.toLowerCase().includes(q)) ||
-        c.accepted_items.some((i) => i.toLowerCase().includes(q)),
-    );
-  }
-
-  // State filter
-  if (params.state && params.state !== 'all') {
-    results = results.filter((c) => c.state.toLowerCase() === params.state!.toLowerCase());
-  }
-
-  // Items filter
-  if (params.items && params.items.length > 0) {
-    results = results.filter((c) =>
-      params.items!.every((item) =>
-        c.accepted_items.some((i) => i.toLowerCase() === item.toLowerCase()),
-      ),
-    );
-  }
-
-  // Open now filter
-  if (params.open_now) {
-    results = results.filter((c) => isOpenNow(c));
-  }
-
-  // Verified only
-  if (params.verified_only) {
-    results = results.filter((c) => c.verification_status === 'VERIFIED');
-  }
-
-  // Add distance if lat/lng provided
-  if (params.lat != null && params.lng != null) {
-    results = results.map((c) => ({
-      ...c,
-      distance_km: getDistanceKm(params.lat!, params.lng!, c.latitude, c.longitude),
-    }));
-  }
-
-  // Sort
-  switch (params.sort) {
-    case 'nearest':
-      if (params.lat != null) {
-        results.sort((a, b) => (a.distance_km ?? 9999) - (b.distance_km ?? 9999));
-      }
-      break;
-    case 'most_upvoted':
-      results.sort((a, b) => b.upvote_count - a.upvote_count);
-      break;
-    case 'recently_updated':
-    default:
-      results.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
-      break;
-  }
-
-  return results;
-}
-
-export function getCenterBySlug(slug: string): RecyclingCenter | undefined {
-  return SEED_CENTERS.find((c) => c.slug === slug);
 }

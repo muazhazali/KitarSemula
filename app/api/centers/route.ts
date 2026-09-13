@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { searchCenters } from '@/lib/utils/centers';
+import { searchCenters } from '@/lib/db/centers';
+import { getAppEnv } from '@/lib/db/client';
 import type { SearchParams } from '@/lib/types';
 
 export async function GET(request: NextRequest) {
+  const env = getAppEnv();
+  if (!env) {
+    return NextResponse.json({ error: 'Database is not configured' }, { status: 503 });
+  }
+
   const { searchParams } = new URL(request.url);
 
   const params: SearchParams = {
@@ -18,7 +24,7 @@ export async function GET(request: NextRequest) {
     limit: parseInt(searchParams.get('limit') ?? '50'),
   };
 
-  const centers = searchCenters(params);
+  const centers = await searchCenters(env, params);
 
   const page = params.page ?? 1;
   const limit = params.limit ?? 50;

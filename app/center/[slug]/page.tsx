@@ -1,20 +1,30 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getCenterBySlug } from '@/lib/utils/centers';
-import { SEED_CENTERS } from '@/lib/seed-data';
+import { getCenterBySlug } from '@/lib/db/centers';
+import { getAppEnv } from '@/lib/db/client';
+import { CENTER_SLUGS } from '@/lib/center-slugs';
 import { CenterDetailClient } from '@/components/centers/center-detail-client';
+
+export const revalidate = 300;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+/**
+ * Slugs come from a generated static list rather than D1: `generateStaticParams`
+ * runs at build time where the D1 binding may be unavailable. The full record is
+ * fetched from D1 at request time (with ISR revalidation), so edits do not
+ * require a redeploy.
+ */
 export async function generateStaticParams() {
-  return SEED_CENTERS.map((c) => ({ slug: c.slug }));
+  return CENTER_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const center = getCenterBySlug(slug);
+  const env = getAppEnv();
+  const center = env ? await getCenterBySlug(env, slug) : null;
 
   if (!center) {
     return { title: 'Center Not Found | KitarSemula.app' };
@@ -38,8 +48,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function CenterPage({ params }: PageProps) {
   const { slug } = await params;
-  const center = getCenterBySlug(slug);
+  const env = getAppEnv();
+  if (!env) notFound();
 
+  const center = await getCenterBySlug(env, slug);
   if (!center) notFound();
 
   // JSON-LD structured data

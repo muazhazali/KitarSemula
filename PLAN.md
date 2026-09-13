@@ -32,39 +32,49 @@ Goal: run the Next.js 16 app on **Cloudflare Workers** (static assets + SSR via 
 
 ## Phase 2 — D1 schema + data layer
 
-Create `migrations/0001_init.sql`:
+**Implemented.** `migrations/0001_init.sql`:
 
-- `centers` — all `RecyclingCenter` fields; `accepted_items`, `tags`, `opening_hours` stored as JSON `TEXT`; index on `state`, `updated_at`, `slug UNIQUE`.
-- `votes` — `(center_slug, voter_key, type, created_at, PK(center_slug, voter_key))`. This also fixes the current gap where dedup is client-only; keep `upvote_count`/`downvote_count` on `centers` or compute from the table.
-- `photos` — see Phase 7 (implemented).
+- `centers` — all `RecyclingCenter` fields; `accepted_items`, `tags`, `opening_hours` stored as JSON `TEXT`; indexes on `state`, `updated_at`, `slug UNIQUE`.
+- `votes` — `(center_slug, voter_key, type, created_at, PK(center_slug, voter_key))`. Vote counts are aggregated from this table rather than stored denormalised on `centers`, so they cannot drift.
+- `photos` — see Phase 7.
 
-**Critical structural change:** `lib/utils/centers.ts` is imported by client components (`center-detail-client.tsx:31`) _and_ imports `SEED_CENTERS`. D1 access is server-only, so:
+Structural split (done):
 
-- Keep `isOpenNow`, `getTodayHours`, `getDistanceKm`, `formatDistance`, `getMarkerColor`, `getStatusLabel` in `lib/utils/centers.ts` (pure, client-safe).
-- Move `searchCenters`/`getCenterBySlug` to new server-only `lib/db/*` (D1 prepared statements), plus `lib/db/client.ts` using `getCloudflareContext()` (and the `async: true` variant for prerendered routes).
+- `lib/utils/centers.ts` keeps only pure, client-safe helpers (`isOpenNow`, `getTodayHours`, `getDistanceKm`, `formatDistance`, `getMarkerColor`, `getStatusLabel`) and no longer imports seed data. This matters because `center-card.tsx` and `recycling-map.tsx` are client components.
+- `lib/db/centers.ts` owns D1 search + lookup (`rowToCenter`, `searchCenters`, `getCenterBySlug`, `getAllSlugs`).
+- `lib/db/votes.ts` owns vote persistence (`recordVote`, `getVoteCounts`).
 
-`lib/seed-data.ts` stops being the runtime source; it becomes the seed input only.
+Search strategy: text/state/verified filters run in SQL (`LIKE` + `json_each` over the JSON columns); item matching, open-now, distance, and sorting run in JS over the filtered set to preserve the previous semantics. Fine at ~250 rows.
+
+`lib/seed-data.ts` is now seed input only — no app code imports it.
 
 ## Phase 3 — Rewire routes and pages
 
-Call sites that become `await`/D1-backed:
+**Implemented.**
 
-- `app/api/centers/route.ts` — `searchCenters` → SQL (`LIKE` for `q`, filters, sort, `LIMIT/OFFSET`); `distance_km` computed after fetch.
-- `app/api/centers/[slug]/route.ts`, `vote/route.ts` — D1 reads/writes; keep the zod schemas, `await params`, and status codes.
-- `app/center/[slug]/page.tsx` — `generateStaticParams` must no longer read D1 synchronously at build. Recommended: keep a generated **slug-only** list for `generateStaticParams`, and fetch the full center from D1 at request time (dynamic/ISR). Keep `generateMetadata` and JSON-LD, both now async. Alternative: use remote D1 bindings during build to prerender all 246 pages, accepting that center edits need a redeploy.
+- `app/api/centers/route.ts` — parses `SearchParams` and delegates to `lib/db/centers.ts#searchCenters`; paginates in JS after search.
+- `app/api/centers/[slug]/route.ts` / `vote/route.ts` / `photos/route.ts` — D1 reads; `vote` writes to the `votes` table, keyed per IP for dedup, after rate limiting.
+- `app/center/[slug]/page.tsx` — `generateStaticParams` reads the generated `lib/center-slugs.ts` (the D1 binding is not available at build time); the page is ISR (`revalidate = 300`) and fetches the full record from D1 per request. `generateMetadata` and JSON-LD are async.
 
 ## Phase 4 — Seed + local dev
 
-- Add `scripts/seed-d1.ts` (or SQL emitted from the CSV) that upserts the 246 rows; run local then remote:
+**Implemented.** `scripts/seed-d1.ts` emits upsert SQL (`INSERT ... ON CONFLICT (slug) DO UPDATE`) from `lib/seed-data.ts` to `.wrangler/seed.sql`, so re-running is safe.
 
-  ```
-  wrangler d1 migrations apply kitarsemula-db --local
-  wrangler d1 migrations apply kitarsemula-db --remote
-  ```
+```
+pnpm seed:local     # migrate + seed the local D1
+pnpm seed:remote    # seed production D1
+pnpm exec wrangler d1 migrations apply kitarsemula-db --local|--remote
+```
 
-- `pnpm dev` for fast iteration; `pnpm preview` to catch workerd-only breakage.
-- Note: `recycling_centres_malaysia_v2_enriched.csv` is untracked — either commit it or keep `lib/seed-data.ts` as the seed source so CI can seed.
-- R2 needs a real binding; `next dev` without `initOpenNextCloudflareForDev()` will make `getAppEnv()` return null and photo routes answer 503.
+Verified: 246 centers in both local and remote D1.
+
+Two traps worth remembering:
+
+- `scripts/seed-d1.ts` writes the file itself in UTF-8 **without BOM**. Redirecting its stdout with PowerShell `>` produces UTF-16, which wrangler rejects.
+- Remote D1 rejects `BEGIN TRANSACTION` in an executed SQL file; do not wrap the seed in a transaction.
+
+- R2 needs a real binding; `next dev` without `initOpenNextCloudflareForDev()` will make `getAppEnv()` return null and D1/photo routes answer 503.
+- `recycling_centres_malaysia_v2_enriched.csv` is untracked; `lib/seed-data.ts` is committed and is what the seed script reads, so CI can seed without the CSV.
 
 ## Phase 5 — Abuse protection
 
@@ -159,16 +169,19 @@ Deliberately **not** included: public delete. Unauthenticated deletion would let
 - `worker-configuration.d.ts` is generated by `pnpm cf-typegen` and gitignored. Rerun it after changing bindings, or `D1Database`/`R2Bucket` will be undefined in typecheck.
 - Adding the Workers ambient types (`worker-configuration.d.ts`) makes `Response.json()` return `unknown`, so `res.json()` call sites need explicit casts. Existing ones were fixed; new fetches must do the same.
 - `crypto.randomUUID()` is fine on Workers.
-- Confirm Next **16.2.9** ↔ chosen adapter version compatibility before committing to it (OpenNext tracks newer 16.x releases closely).
-- OpenNext's Windows dev support has historically been partial — verify `pnpm preview` locally early.
+- **`wrangler deploy` silently re-runs the OpenNext build and will deploy stale/absent artifacts.** After a code change, confirm the change is actually in the bundle before trusting a deploy; if behaviour looks stale, delete both `.next` and `.open-next` and rebuild from clean.
+- **Windows build requires `nodeLinker: hoisted`** in `pnpm-workspace.yaml`. OpenNext recreates pnpm's symlinks with `fs.symlinkSync`, which Windows blocks with `EPERM` without Developer Mode. pnpm 11 ignores `.npmrc`, so the setting must be in `pnpm-workspace.yaml`.
+- Confirm Next **16.2.9** ↔ chosen adapter version compatibility before upgrading.
+- OpenNext's Windows support is explicitly warned against upstream; the clean-build-from-scratch path above is the reliable workaround.
 
-## Suggested execution order
+## Status
 
-1. Adapter spike on a branch: get the current app (still in-memory) building and previewing on Workers.
-2. Add D1 + migrations.
-3. Split pure utils from server-only `lib/db`.
-4. Rewire routes/pages.
-5. Seed.
+1. Adapter spike — done.
+2. D1 + migrations — done.
+3. Split pure utils from server-only `lib/db` — done.
+4. Rewire routes/pages — done.
+5. Seed (246 centers, local + remote) — done.
 6. Photos (Phase 7) — done.
 7. Turnstile + rate limiting (Phase 5) — done.
-8. CI deploy.
+8. CI deploy workflow — written, not yet exercised.
+9. Turnstile keys not yet configured in production (fails open).
