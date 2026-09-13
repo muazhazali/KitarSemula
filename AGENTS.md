@@ -20,7 +20,8 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
 - **Photos are capped at 3 per center.** The cap is enforced atomically in `lib/db/photos.ts#insertPhoto` (D1 `UNIQUE (center_slug, slot)` + `slot < 3`); the API returns 409 when full. Bytes live in R2 (`PHOTOS` binding), metadata in D1.
 - **The photo proxy route is `/api/photos/[id]`** (keyed by photo id), but `resolvePhotoUrl` points at `PHOTO_PUBLIC_BASE_URL/<r2Key>` when that env var is set. Don't change one without the other.
 - **Public photo delete was intentionally not implemented.** Don't add an unauthenticated DELETE.
-- **`worker-configuration.d.ts` is generated** (`pnpm cf-typegen`) and gitignored. It defines `D1Database`/`R2Bucket`; regenerate after editing `wrangler.jsonc` or typecheck breaks. It also makes `res.json()` return `unknown`, so fetch call sites must cast.
+- **Rate limiting / Turnstile fail open when unbound.** `lib/rate-limit.ts#checkRateLimit` allows the request when the `PHOTO_RATE_LIMITER`/`VOTE_RATE_LIMITER` binding is missing, and `lib/turnstile.ts#verifyTurnstile` skips when `TURNSTILE_SECRET_KEY` is unset. This keeps `next dev` usable but means abuse protection is only active once the bindings/secrets are configured.
+- **`worker-configuration.d.ts` is generated** (`pnpm cf-typegen`) and gitignored. It defines `D1Database`/`R2Bucket`/`RateLimit`; regenerate after editing `wrangler.jsonc` or typecheck breaks. It also makes `res.json()` return `unknown`, so fetch call sites must cast.
 - **Route handler `params` are async (Next 15+).** Type is `{ params: Promise<{ slug: string }> }` and every handler must `await params` first.
 - **shadcn style `base-nova` uses Base UI (`@base-ui/react`), not Radix.** All `components/ui/*` import primitives from `@base-ui/react/*` (`merge-props`, `use-render`, etc.). Don't add Radix-based snippets.
 - `next.config.mjs` sets `images.unoptimized: true` — don't add `next/image` features that require the optimizer.
@@ -43,6 +44,7 @@ KitarSemula.app — Malaysia recycling center directory. Next.js 16 (App Router)
   - `lib/utils/centers.ts` — search/filter/open-now/haversine. Reuse; don't reimplement.
   - `lib/db/client.ts` — `getAppEnv()` returns Cloudflare bindings or `null` when unavailable (returns 503, never throws).
   - `lib/db/photos.ts` — D1 photo metadata + `resolvePhotoUrl`; `migrations/` holds SQL.
+  - `lib/turnstile.ts` / `lib/rate-limit.ts` — abuse protection (both fail open when unconfigured).
 - `components/` — feature-grouped (`home/`, `centers/`, `map/`, `search/`, `providers/`); `components/ui/` is shadcn-generated.
 
 ## Conventions

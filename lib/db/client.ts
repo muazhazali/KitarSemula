@@ -9,6 +9,10 @@ export interface AppEnv {
   PHOTOS: R2Bucket;
   /** Optional R2 custom domain, e.g. https://photos.kitarsemula.app */
   PHOTO_PUBLIC_BASE_URL?: string;
+  /** Optional Turnstile secret; when unset, verification is skipped. */
+  TURNSTILE_SECRET_KEY?: string;
+  PHOTO_RATE_LIMITER?: RateLimit;
+  VOTE_RATE_LIMITER?: RateLimit;
 }
 
 /**

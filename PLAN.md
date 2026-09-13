@@ -68,12 +68,29 @@ Call sites that become `await`/D1-backed:
 
 ## Phase 5 — Abuse protection
 
-Add rate limiting and Turnstile to the **photo upload** endpoint (`app/api/centers/[slug]/photos/route.ts`) — public upload is the highest-risk surface. Server-side `siteverify` goes in a shared `lib/turnstile.ts` reading `env.TURNSTILE_SECRET_KEY`, with the site key via `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. Store secrets with `wrangler secret put`. The vote endpoint should also be rate-limited and moved to the server-side `votes` table (see Phase 2) so one client cannot inflate counts.
+**Implemented.**
+
+Turnstile (`lib/turnstile.ts` + `components/centers/turnstile-widget.tsx`):
+
+- The photo upload form renders the widget when `NEXT_PUBLIC_TURNSTILE_SITE_KEY` is set; the token is posted as `cf-turnstile-response` alongside the file.
+- The server calls Siteverify (`verifyTurnstile`) and returns 403 on failure. Tokens are single-use and expire after 300s, so the widget is re-rendered after each upload.
+- **Fails open when unconfigured**: if `TURNSTILE_SECRET_KEY` is unset, verification is skipped so local dev and unconfigured deploys stay usable. This means Turnstile is only real protection once both keys are set.
+- Secrets: `wrangler secret put TURNSTILE_SECRET_KEY`. The site key is public and is read from `NEXT_PUBLIC_TURNSTILE_SITE_KEY` **at build time** (Next inlines `NEXT_PUBLIC_*`), so set it in the build environment (CI secret/var or `.env.local` local), not as a Worker runtime var.
+
+Rate limiting (`lib/rate-limit.ts`, bindings in `wrangler.jsonc`):
+
+- `PHOTO_RATE_LIMITER` — 5 uploads / 60s per IP; 429 + `retry-after: 60` when exceeded.
+- `VOTE_RATE_LIMITER` — 30 votes / 60s per IP.
+- Keyed on `cf-connecting-ip`; also **fails open** when the binding is absent (local dev).
+- Note: the Cloudflare rate-limit binding is per-colo, so limits are approximate globally.
+
+Still open: moving votes to the D1 `votes` table for real server-side dedup (Phase 2). Rate limiting caps abuse but does not make votes one-per-user.
 
 ## Phase 6 — Deploy + CI
 
 - `wrangler login`, `wrangler d1 create kitarsemula-db`, paste `database_id` into `wrangler.jsonc`.
 - `wrangler r2 bucket create kitarsemula-photos`.
+- `wrangler secret put TURNSTILE_SECRET_KEY`; set `NEXT_PUBLIC_TURNSTILE_SITE_KEY` in the **build** environment (it is inlined at build time), not as a Worker runtime var.
 - `pnpm cf-typegen` after any binding change (regenerates `worker-configuration.d.ts`, which is generated and gitignored).
 - `pnpm deploy`.
 - GitHub Actions workflow using `cloudflare/wrangler-action` (or `pnpm deploy`) with `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`, applying remote migrations before deploy.
@@ -136,5 +153,5 @@ Deliberately **not** included: public delete. Unauthenticated deletion would let
 4. Rewire routes/pages.
 5. Seed.
 6. Photos (Phase 7) — done.
-7. Turnstile + rate limiting.
+7. Turnstile + rate limiting (Phase 5) — done.
 8. CI deploy.

@@ -41,7 +41,7 @@ Source: `app/center/[slug]/page.tsx`
 - **Persistence / durability** — must move the vote store off its module-level `Map` (resets on restart). This is the core driver for D1.
 - **Performance** — search is O(n) over 246 records per request with no cache; D1 + indexes + edge delivery should hold or improve TTFB. `distance_km` is computed per request when lat/lng are provided.
 - **Scalability** — reads dominate; write volume is low (votes, photos). D1 read replication covers it; R2 has effectively unbounded capacity.
-- **Security** — zod-like validation plus magic-byte sniffing on photo upload; **no Turnstile, rate limiting, auth, or bot protection currently exists**; vote dedup is client-only (`vote-buttons.tsx` tracks local `voted` state, no server-side voter identity).
+- **Security** — zod validation plus magic-byte sniffing on photo upload; rate limiting (5 uploads/min, 30 votes/min per IP) and Turnstile are implemented but **fail open when their binding/secret is unset**, so protection is only active once configured. Vote dedup remains client-only (`vote-buttons.tsx` local `voted` state); no auth exists.
 - **Media** — max 3 photos per center, ≤5 MB each, JPEG/PNG/WebP only; bytes in R2, metadata in D1; images served unoptimized.
 - **Correctness gates** — `typescript.ignoreBuildErrors: true`, no test suite; verification is `pnpm lint` + `pnpm exec tsc --noEmit`. The adapter build will not catch type errors either.
 - **SEO / shareability** — metadata templates, per-center OpenGraph, JSON-LD, static generation.
@@ -53,6 +53,6 @@ Source: `app/center/[slug]/page.tsx`
 ## Requirement gaps exposed by the deploy
 
 - No server-side vote dedup; votes are anonymous and unauthenticated (a single client can vote once per page load, and the `Map` resets on restart).
-- No rate limiting or bot protection on the vote **or photo upload** endpoints. Public uploads can fill the R2 bucket; this is the highest-risk gap.
+- Rate limiting is per-colo and approximate, and both rate limiting and Turnstile silently fail open when unconfigured — verify bindings/secrets exist in production.
 - `centers` are still read from `lib/seed-data.ts`, so photo uploads reference seed slugs while the D1 `centers` table is not yet the runtime source of truth.
 - No automated tests.

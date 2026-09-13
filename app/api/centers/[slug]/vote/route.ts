@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCenterBySlug } from '@/lib/utils/centers';
+import { getAppEnv } from '@/lib/db/client';
+import { checkRateLimit, clientKey } from '@/lib/rate-limit';
 import { z } from 'zod';
 
 const voteSchema = z.object({
@@ -18,6 +20,17 @@ export async function POST(
 
   if (!center) {
     return NextResponse.json({ error: 'Center not found' }, { status: 404 });
+  }
+
+  const env = getAppEnv();
+  if (env) {
+    const limit = await checkRateLimit(env.VOTE_RATE_LIMITER, clientKey(request, 'vote'));
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: 'Too many votes. Please slow down.' },
+        { status: 429, headers: { 'retry-after': '60' } },
+      );
+    }
   }
 
   let body: unknown;

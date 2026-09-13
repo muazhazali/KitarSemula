@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getCenterBySlug } from '@/lib/utils/centers';
 import { getAppEnv } from '@/lib/db/client';
 import { insertPhoto, listPhotos } from '@/lib/db/photos';
+import { checkRateLimit, clientKey } from '@/lib/rate-limit';
+import { verifyTurnstile } from '@/lib/turnstile';
 import { MAX_PHOTOS_PER_CENTER } from '@/lib/types';
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
@@ -73,11 +75,32 @@ export async function POST(
     return NextResponse.json({ error: 'Photo storage is not configured' }, { status: 503 });
   }
 
+  const limit = await checkRateLimit(env.PHOTO_RATE_LIMITER, clientKey(request, 'photo'));
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: 'Too many uploads. Please wait a minute and try again.' },
+      { status: 429, headers: { 'retry-after': '60' } },
+    );
+  }
+
   let form: FormData;
   try {
     form = await request.formData();
   } catch {
     return NextResponse.json({ error: 'Expected multipart form data' }, { status: 400 });
+  }
+
+  const token = form.get('cf-turnstile-response');
+  const verification = await verifyTurnstile(
+    typeof token === 'string' ? token : null,
+    env.TURNSTILE_SECRET_KEY,
+    request.headers.get('cf-connecting-ip') ?? undefined,
+  );
+  if (!verification.success) {
+    return NextResponse.json(
+      { error: 'Human verification failed. Please refresh and try again.' },
+      { status: 403 },
+    );
   }
 
   const file = form.get('file');

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { CameraIcon, LoaderIcon, UploadIcon } from 'lucide-react';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { MAX_PHOTOS_PER_CENTER } from '@/lib/types';
 import type { CenterPhoto } from '@/lib/types';
+import { TurnstileWidget, TURNSTILE_RESPONSE_FIELD } from './turnstile-widget';
 
 interface PhotosSectionProps {
   slug: string;
@@ -32,6 +33,9 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
   const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [widgetKey, setWidgetKey] = useState(0);
+  const turnstileRequired = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
   const { data, isLoading } = useQuery({
     queryKey: ['photos', slug],
@@ -41,6 +45,10 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
   const photos = data?.photos ?? [];
   const max = data?.max ?? MAX_PHOTOS_PER_CENTER;
   const remaining = Math.max(0, max - photos.length);
+
+  const handleToken = useCallback((token: string | null) => {
+    setTurnstileToken(token);
+  }, []);
 
   const handleFile = async (file: File | undefined) => {
     if (!file) return;
@@ -53,11 +61,16 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
       toast.error('Image must be 5 MB or smaller.');
       return;
     }
+    if (turnstileRequired && !turnstileToken) {
+      toast.error('Please complete the human verification first.');
+      return;
+    }
 
     setUploading(true);
     try {
       const body = new FormData();
       body.append('file', file);
+      if (turnstileToken) body.append(TURNSTILE_RESPONSE_FIELD, turnstileToken);
       const res = await fetch(`/api/centers/${slug}/photos`, { method: 'POST', body });
       const payload = (await res.json()) as { error?: string };
       if (!res.ok) {
@@ -71,6 +84,8 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
     } finally {
       setUploading(false);
       if (inputRef.current) inputRef.current.value = '';
+      setTurnstileToken(null);
+      setWidgetKey((k) => k + 1);
     }
   };
 
@@ -93,6 +108,7 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
           className="hidden"
           onChange={(e) => handleFile(e.target.files?.[0])}
         />
+        {remaining > 0 && <TurnstileWidget key={widgetKey} onToken={handleToken} />}
         <Button
           variant="outline"
           size="sm"
