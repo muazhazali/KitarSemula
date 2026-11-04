@@ -20,6 +20,7 @@ import { OpeningHoursTable } from './opening-hours';
 import { PhotosSection } from './photos-section';
 import type { RecyclingCenter } from '@/lib/types';
 import { isOpenNow, getTodayHours } from '@/lib/utils/centers';
+import { cn } from '@/lib/utils';
 
 const DetailMap = dynamic(() => import('@/components/map/detail-map'), {
   ssr: false,
@@ -35,9 +36,9 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
   const todayHours = getTodayHours(center);
 
   const statusVariant = () => {
-    if (center.status === 'ACTIVE' && openNow) return 'default';
     if (center.status === 'CLOSED') return 'destructive';
-    return 'secondary';
+    if (center.status === 'ACTIVE' && openNow) return 'default';
+    return 'outline';
   };
 
   const statusLabel = () => {
@@ -48,16 +49,18 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
   };
 
   return (
-    <div className="bg-background min-h-screen">
+    <div className="bg-background min-h-dvh">
       {/* Top nav */}
-      <header className="bg-background/95 border-border sticky top-0 z-20 flex items-center gap-3 border-b px-4 py-3 backdrop-blur-sm">
+      <header className="bg-background/95 border-border sticky top-0 z-20 flex items-center gap-3 border-b px-4 py-2.5 backdrop-blur-sm sm:py-3">
         <Link
           href="/"
-          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+          className="text-muted-foreground hover:text-foreground -ml-2 inline-flex min-h-10 items-center gap-1.5 rounded-lg px-2 text-sm font-medium transition-colors"
           aria-label="Back to map"
         >
           <ArrowLeftIcon className="size-4" aria-hidden="true" />
-          <span className="hidden sm:inline">Back to Map</span>
+          <span>
+            Back<span className="hidden sm:inline"> to Map</span>
+          </span>
         </Link>
         <Separator orientation="vertical" className="h-4" />
         <div className="flex min-w-0 items-center gap-1.5">
@@ -68,7 +71,7 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-6">
+      <main className="mx-auto flex max-w-3xl flex-col gap-6 px-4 py-5 pb-28 sm:py-6 sm:pb-6">
         {/* Hero / name section */}
         <section>
           {/* Breadcrumb */}
@@ -91,7 +94,13 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
                 {center.name}
               </h1>
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant={statusVariant()} className="font-medium">
+                <Badge
+                  variant={statusVariant()}
+                  className={cn(
+                    'font-medium',
+                    center.status === 'ACTIVE' && !openNow && 'text-muted-foreground',
+                  )}
+                >
                   {statusLabel()}
                 </Badge>
                 {center.verification_status === 'VERIFIED' && (
@@ -118,7 +127,7 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
         </section>
 
         {/* Map preview */}
-        <div className="border-border h-52 overflow-hidden rounded-xl border shadow-sm sm:h-64">
+        <div className="border-border h-44 overflow-hidden rounded-xl border shadow-sm sm:h-64">
           <DetailMap lat={center.latitude} lng={center.longitude} name={center.name} />
         </div>
 
@@ -195,13 +204,13 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
           )}
         </section>
 
-        {/* Route button */}
+        {/* Route button — desktop only; mobile gets a sticky action bar */}
         {center.google_maps_url && (
           <a
             href={center.google_maps_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex w-full items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors sm:w-auto"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 hidden min-h-11 w-full items-center justify-center gap-2 rounded-lg px-5 text-sm font-semibold transition-colors sm:inline-flex sm:w-auto"
           >
             <NavigationIcon className="size-4" aria-hidden="true" />
             Get Directions via Google Maps
@@ -281,6 +290,21 @@ export function CenterDetailClient({ center }: CenterDetailClientProps) {
           </div>
         </section>
       </main>
+
+      {/* Sticky mobile directions bar */}
+      {center.google_maps_url && (
+        <div className="bg-background/95 border-border fixed inset-x-0 bottom-0 z-30 border-t p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm sm:hidden">
+          <a
+            href={center.google_maps_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold transition-colors"
+          >
+            <NavigationIcon className="size-4" aria-hidden="true" />
+            Get Directions
+          </a>
+        </div>
+      )}
     </div>
   );
 }

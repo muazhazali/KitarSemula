@@ -3,13 +3,25 @@
 import dynamic from 'next/dynamic';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { RecycleIcon } from 'lucide-react';
+import { Maximize2Icon, Minimize2Icon, RecycleIcon, SlidersHorizontalIcon } from 'lucide-react';
 import { SearchBar } from '@/components/search/search-bar';
-import { FilterPanel } from '@/components/search/filter-panel';
+import { FilterPanel, countActiveFilters } from '@/components/search/filter-panel';
 import { CenterList } from '@/components/centers/center-list';
 import { LocationButton } from '@/components/map/location-button';
 import { MapLegend } from '@/components/map/map-legend';
 import { StateOnboardingDialog } from '@/components/home/state-onboarding-dialog';
+import { Button } from '@/components/ui/button';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import { cn } from '@/lib/utils';
 import { MALAYSIA_STATES } from '@/lib/types';
 import type { RecyclingCenter, SearchParams } from '@/lib/types';
 
@@ -24,6 +36,7 @@ const RecyclingMap = dynamic(() => import('@/components/map/recycling-map'), {
 
 const CENTERS_PAGE_SIZE = 250;
 const PREFERRED_STATE_KEY = 'kitarsemula.preferred-state';
+const SEARCH_DEBOUNCE_MS = 300;
 
 async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
   const all: RecyclingCenter[] = [];
@@ -63,6 +76,7 @@ function savePreferredState(state: string) {
 }
 
 export function HomeClient() {
+  const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<Partial<SearchParams>>({
     sort: 'recently_updated',
@@ -70,6 +84,7 @@ export function HomeClient() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | undefined>();
   const [selectedCenter, setSelectedCenter] = useState<RecyclingCenter | undefined>();
   const [statePromptOpen, setStatePromptOpen] = useState(false);
+  const [mapExpanded, setMapExpanded] = useState(false);
 
   useEffect(() => {
     let saved: string | null = null;
@@ -88,6 +103,18 @@ export function HomeClient() {
     }
 
     setStatePromptOpen(true);
+  }, []);
+
+  useEffect(() => {
+    if (!searchInput) return;
+
+    const timer = window.setTimeout(() => setSearchQuery(searchInput), SEARCH_DEBOUNCE_MS);
+    return () => window.clearTimeout(timer);
+  }, [searchInput]);
+
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchInput(value);
+    if (!value) setSearchQuery('');
   }, []);
 
   const queryParams: SearchParams = useMemo(
@@ -123,30 +150,35 @@ export function HomeClient() {
   }, []);
 
   const centerList = centers ?? [];
+  const activeFilterCount = countActiveFilters(filters);
+  const resultLabel = `${centerList.length} ${centerList.length === 1 ? 'center' : 'centers'}`;
 
   return (
-    <div className="bg-background flex h-screen flex-col overflow-hidden">
+    <div className="bg-background flex h-dvh flex-col overflow-hidden">
       {/* Header */}
-      <header className="border-border bg-background z-10 flex shrink-0 items-center gap-3 border-b px-4 py-3">
-        <div className="flex items-center gap-2">
+      <header className="border-border bg-background z-10 flex shrink-0 items-center gap-2 border-b px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3">
+        <div className="flex shrink-0 items-center gap-2">
           <RecycleIcon className="text-primary size-5" aria-hidden="true" />
-          <span className="text-foreground text-base font-semibold tracking-tight">
+          <span className="text-foreground hidden text-base font-semibold tracking-tight sm:inline">
             Kitar<span className="text-primary">Semula</span>
           </span>
         </div>
-        <div className="max-w-xl flex-1">
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+        <div className="max-w-xl min-w-0 flex-1">
+          <SearchBar value={searchInput} onChange={handleSearchChange} />
         </div>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-2">
           <LocationButton onLocation={handleLocation} />
         </div>
       </header>
 
       {/* Main layout: map + sidebar */}
-      <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
-        {/* Map — full width on mobile, ~60% on desktop */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
+        {/* Map — 38dvh on mobile, expandable; full height on desktop */}
         <main
-          className="relative isolate order-1 h-[45vh] shrink-0 md:order-2 md:h-full md:flex-1"
+          className={cn(
+            'relative isolate order-1 md:order-2 md:h-full md:min-h-0 md:flex-1',
+            mapExpanded ? 'min-h-0 flex-1' : 'h-[38dvh] shrink-0',
+          )}
           aria-label="Map section"
         >
           <RecyclingMap
@@ -156,15 +188,89 @@ export function HomeClient() {
             onSelectCenter={setSelectedCenter}
           />
           <MapLegend />
+          <button
+            type="button"
+            onClick={() => setMapExpanded((expanded) => !expanded)}
+            className="bg-background/95 border-border hover:bg-muted absolute top-3 right-3 z-[500] inline-flex size-11 items-center justify-center rounded-lg border shadow-sm backdrop-blur-sm transition-colors md:hidden"
+            aria-label={mapExpanded ? 'Show center list' : 'Expand map'}
+            aria-pressed={mapExpanded}
+          >
+            {mapExpanded ? (
+              <Minimize2Icon className="size-5" aria-hidden="true" />
+            ) : (
+              <Maximize2Icon className="size-5" aria-hidden="true" />
+            )}
+          </button>
         </main>
 
         {/* Sidebar: filters + list */}
         <aside
-          className="border-border order-2 flex shrink-0 flex-col overflow-hidden border-r md:order-1 md:w-[420px]"
+          className={cn(
+            'border-border order-2 min-h-0 flex-1 flex-col overflow-hidden md:order-1 md:flex md:w-[420px] md:flex-none md:border-r',
+            mapExpanded ? 'hidden md:flex' : 'flex',
+          )}
           aria-label="Center list"
         >
-          {/* Filters */}
-          <div className="border-border bg-background shrink-0 border-b px-3 pt-3 pb-2">
+          {/* Mobile quick filters */}
+          <div className="border-border bg-background flex shrink-0 items-center gap-2 border-b px-3 py-2 md:hidden">
+            <Sheet>
+              <SheetTrigger
+                render={<Button variant="outline" className="h-10 shrink-0 gap-1.5 px-3 text-sm" />}
+              >
+                <SlidersHorizontalIcon className="size-4" aria-hidden="true" />
+                Filters
+                {activeFilterCount > 0 && (
+                  <span className="bg-primary text-primary-foreground inline-flex size-5 items-center justify-center rounded-full text-[11px] font-semibold">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </SheetTrigger>
+              <SheetContent side="bottom" className="max-h-[85dvh] gap-0 p-0">
+                <div
+                  className="bg-border mx-auto mt-2 h-1.5 w-10 shrink-0 rounded-full"
+                  aria-hidden="true"
+                />
+                <SheetHeader className="px-4 pt-3 pb-2">
+                  <SheetTitle>Filters</SheetTitle>
+                  <SheetDescription>
+                    Narrow results by state, sort order, and accepted items.
+                  </SheetDescription>
+                </SheetHeader>
+                <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
+                  <FilterPanel
+                    variant="sheet"
+                    filters={filters}
+                    onChange={handleFiltersChange}
+                    resultCount={centerList.length}
+                  />
+                </div>
+                <SheetFooter className="border-border border-t p-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+                  <SheetClose render={<Button className="h-11 w-full text-sm" />}>
+                    Show {resultLabel}
+                  </SheetClose>
+                </SheetFooter>
+              </SheetContent>
+            </Sheet>
+
+            <button
+              type="button"
+              onClick={() => handleFiltersChange({ ...filters, open_now: !filters.open_now })}
+              className={cn(
+                'inline-flex h-10 shrink-0 items-center rounded-lg border px-3 text-sm font-medium transition-colors',
+                filters.open_now
+                  ? 'bg-primary text-primary-foreground border-primary'
+                  : 'bg-background text-foreground border-border hover:bg-muted',
+              )}
+              aria-pressed={filters.open_now}
+            >
+              Open now
+            </button>
+
+            <span className="text-muted-foreground ml-auto shrink-0 text-xs">{resultLabel}</span>
+          </div>
+
+          {/* Desktop filters */}
+          <div className="border-border bg-background hidden shrink-0 border-b px-3 pt-3 pb-2 md:block">
             <FilterPanel
               filters={filters}
               onChange={handleFiltersChange}
@@ -173,12 +279,11 @@ export function HomeClient() {
           </div>
 
           {/* Scrollable list */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
             <CenterList
               centers={centerList}
               selectedId={selectedCenter?.id}
               isLoading={isLoading}
-              onSelectCenter={setSelectedCenter}
             />
           </div>
         </aside>

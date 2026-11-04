@@ -11,11 +11,7 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export function SearchBar({
-  value,
-  onChange,
-  placeholder = 'Search by name, area, or material (e.g. "plastic", "e-waste", "shah alam")',
-}: SearchBarProps) {
+export function SearchBar({ value, onChange, placeholder = 'Search centers' }: SearchBarProps) {
   const [focused, setFocused] = useState(false);
 
   const handleClear = useCallback(() => {
@@ -39,7 +35,9 @@ export function SearchBar({
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         placeholder={placeholder}
-        className="h-11 border-0 bg-transparent pr-9 pl-9 shadow-none focus-visible:ring-0"
+        enterKeyHint="search"
+        autoComplete="off"
+        className="h-11 border-0 bg-transparent pr-11 pl-9 shadow-none focus-visible:ring-0"
         aria-label="Search recycling centers"
       />
       {value && (
@@ -47,7 +45,7 @@ export function SearchBar({
           variant="ghost"
           size="icon"
           onClick={handleClear}
-          className="text-muted-foreground hover:text-foreground absolute right-1 size-8"
+          className="text-muted-foreground hover:text-foreground absolute right-1 size-9"
           aria-label="Clear search"
         >
           <XIcon className="size-4" aria-hidden="true" />

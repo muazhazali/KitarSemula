@@ -53,7 +53,7 @@ export function StateOnboardingDialog({ open, onSelect }: StateOnboardingDialogP
             <Button
               key={state}
               variant="outline"
-              className="justify-center"
+              className="h-11 justify-center text-sm"
               onClick={() => handleSelect(state)}
             >
               {state}
@@ -61,7 +61,7 @@ export function StateOnboardingDialog({ open, onSelect }: StateOnboardingDialogP
           ))}
         </div>
 
-        <Button variant="ghost" className="w-full" onClick={() => handleSelect('all')}>
+        <Button variant="ghost" className="h-11 w-full" onClick={() => handleSelect('all')}>
           Show all states
         </Button>
       </DialogContent>

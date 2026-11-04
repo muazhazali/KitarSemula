@@ -11,12 +11,30 @@ interface RecyclingMapProps {
   onSelectCenter?: (center: RecyclingCenter) => void;
 }
 
+type LeafletNamespace = typeof import('leaflet');
+
 const MARKER_COLORS = {
   green: '#16a34a',
   red: '#dc2626',
   grey: '#6b7280',
   orange: '#ea580c',
 };
+
+/**
+ * Markers use a 44x44 transparent hit area around a small colored dot so they
+ * stay tappable on phones while keeping the visual size compact.
+ */
+function createCenterIcon(L: LeafletNamespace, color: string, isSelected: boolean) {
+  const dotSize = isSelected ? 20 : 16;
+
+  return L.divIcon({
+    className: 'kitar-center-marker',
+    html: `<span style="display:flex;align-items:center;justify-content:center;width:44px;height:44px;"><span style="display:block;width:${dotSize}px;height:${dotSize}px;border-radius:9999px;background:${color};border:${isSelected ? '3px solid #fff' : `1.5px solid ${color}`};box-shadow:0 1px 4px rgba(0,0,0,0.45);"></span></span>`,
+    iconSize: [44, 44],
+    iconAnchor: [22, 22],
+    popupAnchor: [0, -16],
+  });
+}
 
 export default function RecyclingMap({
   centers,
@@ -26,7 +44,8 @@ export default function RecyclingMap({
 }: RecyclingMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<import('leaflet').Map | null>(null);
-  const markersRef = useRef<Map<string, import('leaflet').CircleMarker>>(new Map());
+  const markersRef = useRef<Map<string, import('leaflet').Marker>>(new Map());
+  const userMarkerRef = useRef<import('leaflet').CircleMarker | null>(null);
   const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
@@ -53,6 +72,7 @@ export default function RecyclingMap({
 
       leafletMapRef.current = map;
       setMapReady(true);
+      window.setTimeout(() => map.invalidateSize(), 0);
     };
 
     initMap();
@@ -64,6 +84,17 @@ export default function RecyclingMap({
       setMapReady(false);
     };
   }, []);
+
+  // Leaflet needs a nudge whenever the container height changes (mobile map expand).
+  useEffect(() => {
+    const map = leafletMapRef.current;
+    const container = mapRef.current;
+    if (!map || !mapReady || !container) return;
+
+    const observer = new ResizeObserver(() => map.invalidateSize());
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [mapReady]);
 
   // Update markers when centers change
   useEffect(() => {
@@ -79,16 +110,13 @@ export default function RecyclingMap({
 
       centers.forEach((center) => {
         const color = MARKER_COLORS[getMarkerColor(center)];
-        const isSelected = center.id === selectedId;
         const openNow = isOpenNow(center);
 
-        const marker = L.circleMarker([center.latitude, center.longitude], {
-          radius: isSelected ? 12 : 8,
-          fillColor: color,
-          color: isSelected ? '#fff' : color,
-          weight: isSelected ? 3 : 1.5,
-          opacity: 1,
-          fillOpacity: isSelected ? 1 : 0.85,
+        const marker = L.marker([center.latitude, center.longitude], {
+          icon: createCenterIcon(L, color, false),
+          title: center.name,
+          riseOnHover: true,
+          keyboard: true,
         });
 
         const distStr =
@@ -108,7 +136,7 @@ export default function RecyclingMap({
             : center.status.replace('_', ' ');
 
         marker.bindPopup(
-          `<div style="min-width:200px;font-family:system-ui,sans-serif">
+          `<div style="min-width:210px;font-family:system-ui,sans-serif">
             <strong style="font-size:14px;line-height:1.3">${center.name}</strong><br/>
             <span style="color:#374151;font-size:12px;display:block;margin:4px 0">${center.address}</span>
             ${distStr}
@@ -116,12 +144,12 @@ export default function RecyclingMap({
             <span style="font-size:11px;color:#6b7280;margin-top:2px;display:block">${itemsShort}</span>
             <div style="margin-top:8px">
               <a href="/center/${center.slug}"
-                style="display:inline-block;background:#16a34a;color:#fff;padding:4px 12px;border-radius:4px;font-size:12px;text-decoration:none;font-weight:600">
+                style="display:inline-flex;align-items:center;min-height:44px;background:#16a34a;color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;text-decoration:none;font-weight:600">
                 View Details &rarr;
               </a>
             </div>
           </div>`,
-          { maxWidth: 260 },
+          { maxWidth: 280, minWidth: 220, autoPanPadding: [24, 24] },
         );
 
         marker.on('click', () => {
@@ -131,12 +159,21 @@ export default function RecyclingMap({
         marker.addTo(map);
         markersRef.current.set(center.id, marker);
       });
+
+      // Keep the viewport focused on the current result set. Skip while the user
+      // is navigating by location, where flyTo owns the viewport.
+      if (centers.length > 0 && !userLocation) {
+        const bounds = L.latLngBounds(
+          centers.map((center) => [center.latitude, center.longitude] as [number, number]),
+        );
+        map.fitBounds(bounds, { padding: [32, 32], maxZoom: 12 });
+      }
     };
 
     updateMarkers();
-  }, [centers, selectedId, onSelectCenter, mapReady]);
+  }, [centers, userLocation, onSelectCenter, mapReady]);
 
-  // Update selected marker size
+  // Highlight the selected marker and bring it into view
   useEffect(() => {
     const map = leafletMapRef.current;
     if (!map || !mapReady || !selectedId) return;
@@ -150,12 +187,7 @@ export default function RecyclingMap({
         const color = MARKER_COLORS[getMarkerColor(center)];
         const isSelected = id === selectedId;
 
-        (marker as ReturnType<typeof L.circleMarker>).setStyle({
-          radius: isSelected ? 12 : 8,
-          fillOpacity: isSelected ? 1 : 0.85,
-          weight: isSelected ? 3 : 1.5,
-          color: isSelected ? '#fff' : color,
-        });
+        marker.setIcon(createCenterIcon(L, color, isSelected));
 
         if (isSelected) {
           marker.openPopup();
@@ -175,7 +207,8 @@ export default function RecyclingMap({
     const showLocation = async () => {
       const L = (await import('leaflet')).default;
 
-      L.circleMarker([userLocation.lat, userLocation.lng], {
+      userMarkerRef.current?.remove();
+      userMarkerRef.current = L.circleMarker([userLocation.lat, userLocation.lng], {
         radius: 8,
         fillColor: '#2563eb',
         color: '#fff',

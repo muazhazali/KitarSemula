@@ -39,14 +39,14 @@ export function LocationButton({ onLocation }: LocationButtonProps) {
       size="icon"
       onClick={handleLocate}
       disabled={loading}
-      className="bg-background border-border size-10 shadow-sm"
+      className="bg-background border-border size-11 shadow-sm"
       aria-label="Use my location"
       title="Use my location"
     >
       {loading ? (
-        <LoaderIcon className="size-4 animate-spin" aria-hidden="true" />
+        <LoaderIcon className="size-5 animate-spin" aria-hidden="true" />
       ) : (
-        <LocateIcon className="size-4" aria-hidden="true" />
+        <LocateIcon className="size-5" aria-hidden="true" />
       )}
     </Button>
   );

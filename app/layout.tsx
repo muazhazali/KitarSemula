@@ -37,10 +37,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: 'light',
-  themeColor: '#2d7a44',
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#2d7a44' },
+    { media: '(prefers-color-scheme: dark)', color: '#111111' },
+  ],
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
+  interactiveWidget: 'resizes-content',
 };
 
 export default function RootLayout({

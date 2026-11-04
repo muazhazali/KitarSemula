@@ -91,7 +91,7 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
 
   return (
     <section aria-labelledby="photos-heading">
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <h2 id="photos-heading" className="text-foreground text-base font-semibold">
           Photos
           {photos.length > 0 && (
@@ -108,32 +108,34 @@ export function PhotosSection({ slug, centerName }: PhotosSectionProps) {
           className="hidden"
           onChange={(e) => handleFile(e.target.files?.[0])}
         />
-        {remaining > 0 && (
-          <TurnstileWidget
-            key={widgetKey}
-            action={TURNSTILE_ACTION_PHOTO_UPLOAD}
-            onToken={handleToken}
-          />
-        )}
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => inputRef.current?.click()}
-          disabled={uploading || remaining === 0}
-          className="gap-1.5"
-          aria-label={
-            remaining === 0
-              ? `Maximum ${max} photos reached for ${centerName}`
-              : `Upload a photo for ${centerName}`
-          }
-        >
-          {uploading ? (
-            <LoaderIcon className="size-4 animate-spin" aria-hidden="true" />
-          ) : (
-            <UploadIcon className="size-4" data-icon="inline-start" aria-hidden="true" />
+        <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:w-auto">
+          {remaining > 0 && (
+            <TurnstileWidget
+              key={widgetKey}
+              action={TURNSTILE_ACTION_PHOTO_UPLOAD}
+              onToken={handleToken}
+              className="order-first w-full overflow-hidden sm:order-none sm:w-auto"
+            />
           )}
-          {remaining === 0 ? 'Limit reached' : `Upload (${remaining} left)`}
-        </Button>
+          <Button
+            variant="outline"
+            onClick={() => inputRef.current?.click()}
+            disabled={uploading || remaining === 0}
+            className="h-10 gap-1.5"
+            aria-label={
+              remaining === 0
+                ? `Maximum ${max} photos reached for ${centerName}`
+                : `Upload a photo for ${centerName}`
+            }
+          >
+            {uploading ? (
+              <LoaderIcon className="size-4 animate-spin" aria-hidden="true" />
+            ) : (
+              <UploadIcon className="size-4" data-icon="inline-start" aria-hidden="true" />
+            )}
+            {remaining === 0 ? 'Limit reached' : `Upload (${remaining} left)`}
+          </Button>
+        </div>
       </div>
 
       {isLoading ? (

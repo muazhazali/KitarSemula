@@ -47,10 +47,9 @@ export function VoteButtons({ slug, initialUpvotes, initialDownvotes }: VoteButt
     <div className="flex items-center gap-2">
       <Button
         variant={voted === 'UP' ? 'default' : 'outline'}
-        size="sm"
         onClick={() => handleVote('UP')}
         disabled={loading || voted !== null}
-        className="gap-1.5"
+        className="h-10 gap-1.5 px-3"
         aria-label={`Upvote. Current count: ${upvotes}`}
         aria-pressed={voted === 'UP'}
       >
@@ -59,10 +58,9 @@ export function VoteButtons({ slug, initialUpvotes, initialDownvotes }: VoteButt
       </Button>
       <Button
         variant={voted === 'DOWN' ? 'destructive' : 'outline'}
-        size="sm"
         onClick={() => handleVote('DOWN')}
         disabled={loading || voted !== null}
-        className="gap-1.5"
+        className="h-10 gap-1.5 px-3"
         aria-label={`Downvote. Current count: ${downvotes}`}
         aria-pressed={voted === 'DOWN'}
       >

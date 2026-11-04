@@ -170,5 +170,16 @@
   }
   html {
     @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
+
+.kitar-center-marker {
+  background: transparent;
+  border: 0;
 }
