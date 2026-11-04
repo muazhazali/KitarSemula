@@ -14,7 +14,7 @@ export function MapLegend() {
   ];
 
   return (
-    <div className="pointer-events-none absolute bottom-3 left-3 z-[500] flex flex-col items-start gap-1.5">
+    <div className="pointer-events-none absolute top-24 left-3 z-[500] flex flex-col items-start gap-1.5 md:top-auto md:bottom-3">
       {open && (
         <div className="bg-background/95 border-border pointer-events-auto rounded-lg border px-3 py-2 shadow-sm backdrop-blur-sm">
           <div className="flex flex-col gap-1">

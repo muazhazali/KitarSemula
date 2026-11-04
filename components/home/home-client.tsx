@@ -1,9 +1,17 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import type { PointerEvent as ReactPointerEvent } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Maximize2Icon, Minimize2Icon, RecycleIcon, SlidersHorizontalIcon } from 'lucide-react';
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  Maximize2Icon,
+  Minimize2Icon,
+  RecycleIcon,
+  SlidersHorizontalIcon,
+} from 'lucide-react';
 import { SearchBar } from '@/components/search/search-bar';
 import { FilterPanel, countActiveFilters } from '@/components/search/filter-panel';
 import { CenterList } from '@/components/centers/center-list';
@@ -37,6 +45,15 @@ const RecyclingMap = dynamic(() => import('@/components/map/recycling-map'), {
 const CENTERS_PAGE_SIZE = 250;
 const PREFERRED_STATE_KEY = 'kitarsemula.preferred-state';
 const SEARCH_DEBOUNCE_MS = 300;
+const PEEK_HEIGHT = 112;
+
+type SheetSnap = 'peek' | 'half' | 'full';
+
+const SHEET_SNAP_CLASSES: Record<SheetSnap, string> = {
+  peek: 'h-[calc(7rem+env(safe-area-inset-bottom))]',
+  half: 'h-[44dvh]',
+  full: 'h-[calc(100dvh-4.5rem)]',
+};
 
 async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
   const all: RecyclingCenter[] = [];
@@ -84,7 +101,15 @@ export function HomeClient() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | undefined>();
   const [selectedCenter, setSelectedCenter] = useState<RecyclingCenter | undefined>();
   const [statePromptOpen, setStatePromptOpen] = useState(false);
-  const [mapExpanded, setMapExpanded] = useState(false);
+  const [sheetSnap, setSheetSnap] = useState<SheetSnap>('half');
+  const [dragHeight, setDragHeight] = useState<number | null>(null);
+  const sheetRef = useRef<HTMLElement>(null);
+  const sheetDragRef = useRef<{
+    startY: number;
+    startHeight: number;
+    currentHeight: number;
+    moved: boolean;
+  } | null>(null);
 
   useEffect(() => {
     let saved: string | null = null;
@@ -149,6 +174,84 @@ export function HomeClient() {
     setStatePromptOpen(false);
   }, []);
 
+  const getSnapHeights = useCallback((): Record<SheetSnap, number> => {
+    const parentHeight =
+      sheetRef.current?.parentElement?.getBoundingClientRect().height ?? window.innerHeight;
+
+    return {
+      peek: PEEK_HEIGHT,
+      half: Math.round(window.innerHeight * 0.44),
+      full: Math.max(PEEK_HEIGHT, parentHeight - 8),
+    };
+  }, []);
+
+  const handleSheetPointerDown = useCallback((event: ReactPointerEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).closest('button')) return;
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+    const sheet = sheetRef.current;
+    if (!sheet) return;
+
+    const height = sheet.getBoundingClientRect().height;
+    sheetDragRef.current = {
+      startY: event.clientY,
+      startHeight: height,
+      currentHeight: height,
+      moved: false,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }, []);
+
+  const handleSheetPointerMove = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const drag = sheetDragRef.current;
+      if (!drag) return;
+
+      const delta = drag.startY - event.clientY;
+      if (Math.abs(delta) > 6) drag.moved = true;
+
+      const heights = getSnapHeights();
+      const next = Math.min(heights.full, Math.max(heights.peek, drag.startHeight + delta));
+      drag.currentHeight = next;
+      setDragHeight(next);
+    },
+    [getSnapHeights],
+  );
+
+  const handleSheetPointerEnd = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const drag = sheetDragRef.current;
+      if (!drag) return;
+
+      sheetDragRef.current = null;
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+
+      if (!drag.moved) {
+        setDragHeight(null);
+        setSheetSnap((snap) => (snap === 'peek' ? 'half' : 'peek'));
+        return;
+      }
+
+      const heights = getSnapHeights();
+      const nearest = (Object.keys(heights) as SheetSnap[]).reduce((best, snap) =>
+        Math.abs(heights[snap] - drag.currentHeight) < Math.abs(heights[best] - drag.currentHeight)
+          ? snap
+          : best,
+      );
+
+      setSheetSnap(nearest);
+      setDragHeight(null);
+    },
+    [getSnapHeights],
+  );
+
+  const cycleSheetSnap = useCallback(() => {
+    setDragHeight(null);
+    setSheetSnap((snap) => (snap === 'peek' ? 'half' : snap === 'half' ? 'full' : 'peek'));
+  }, []);
+
   const centerList = centers ?? [];
   const activeFilterCount = countActiveFilters(filters);
   const resultLabel = `${centerList.length} ${centerList.length === 1 ? 'center' : 'centers'}`;
@@ -172,13 +275,10 @@ export function HomeClient() {
       </header>
 
       {/* Main layout: map + sidebar */}
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
-        {/* Map — 38dvh on mobile, expandable; full height on desktop */}
+      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden md:flex-row">
+        {/* Map — full-height behind the mobile sheet on phones */}
         <main
-          className={cn(
-            'relative isolate order-1 md:order-2 md:h-full md:min-h-0 md:flex-1',
-            mapExpanded ? 'min-h-0 flex-1' : 'h-[38dvh] shrink-0',
-          )}
+          className="relative isolate order-1 h-full min-h-0 flex-1 md:order-2"
           aria-label="Map section"
         >
           <RecyclingMap
@@ -190,12 +290,15 @@ export function HomeClient() {
           <MapLegend />
           <button
             type="button"
-            onClick={() => setMapExpanded((expanded) => !expanded)}
+            onClick={() => {
+              setDragHeight(null);
+              setSheetSnap((snap) => (snap === 'peek' ? 'half' : 'peek'));
+            }}
             className="bg-background/95 border-border hover:bg-muted absolute top-3 right-3 z-[500] inline-flex size-11 items-center justify-center rounded-lg border shadow-sm backdrop-blur-sm transition-colors md:hidden"
-            aria-label={mapExpanded ? 'Show center list' : 'Expand map'}
-            aria-pressed={mapExpanded}
+            aria-label={sheetSnap === 'peek' ? 'Show center list' : 'Expand map'}
+            aria-pressed={sheetSnap !== 'peek'}
           >
-            {mapExpanded ? (
+            {sheetSnap === 'peek' ? (
               <Minimize2Icon className="size-5" aria-hidden="true" />
             ) : (
               <Maximize2Icon className="size-5" aria-hidden="true" />
@@ -203,14 +306,50 @@ export function HomeClient() {
           </button>
         </main>
 
-        {/* Sidebar: filters + list */}
+        {/* Mobile: draggable bottom sheet. Desktop: fixed sidebar. */}
         <aside
+          ref={sheetRef}
+          style={dragHeight !== null ? { height: dragHeight } : undefined}
           className={cn(
-            'border-border order-2 min-h-0 flex-1 flex-col overflow-hidden md:order-1 md:flex md:w-[420px] md:flex-none md:border-r',
-            mapExpanded ? 'hidden md:flex' : 'flex',
+            'bg-background border-border absolute inset-x-0 bottom-0 z-30 flex flex-col overflow-hidden rounded-t-2xl border-t pb-[env(safe-area-inset-bottom)] shadow-[0_-12px_32px_rgba(0,0,0,0.18)]',
+            'md:static md:order-1 md:h-auto md:w-[420px] md:flex-none md:rounded-none md:border-t-0 md:border-r md:pb-0 md:shadow-none',
+            dragHeight === null && 'transition-[height] duration-200 ease-out',
+            SHEET_SNAP_CLASSES[sheetSnap],
           )}
           aria-label="Center list"
         >
+          {/* Drag handle */}
+          <div
+            className="relative flex h-9 shrink-0 cursor-grab touch-none items-center justify-center select-none active:cursor-grabbing md:hidden"
+            onPointerDown={handleSheetPointerDown}
+            onPointerMove={handleSheetPointerMove}
+            onPointerUp={handleSheetPointerEnd}
+            onPointerCancel={handleSheetPointerEnd}
+          >
+            <span className="bg-border h-1.5 w-10 rounded-full" aria-hidden="true" />
+            <span className="text-muted-foreground absolute left-3 text-xs font-medium">
+              {resultLabel}
+            </span>
+            <button
+              type="button"
+              onClick={cycleSheetSnap}
+              className="text-muted-foreground hover:bg-muted absolute right-1 inline-flex size-9 items-center justify-center rounded-md transition-colors"
+              aria-label={
+                sheetSnap === 'peek'
+                  ? 'Show center list'
+                  : sheetSnap === 'half'
+                    ? 'Expand center list'
+                    : 'Collapse center list'
+              }
+            >
+              {sheetSnap === 'full' ? (
+                <ChevronDownIcon className="size-4" aria-hidden="true" />
+              ) : (
+                <ChevronUpIcon className="size-4" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+
           {/* Mobile quick filters */}
           <div className="border-border bg-background flex shrink-0 items-center gap-2 border-b px-3 py-2 md:hidden">
             <Sheet>
@@ -265,8 +404,6 @@ export function HomeClient() {
             >
               Open now
             </button>
-
-            <span className="text-muted-foreground ml-auto shrink-0 text-xs">{resultLabel}</span>
           </div>
 
           {/* Desktop filters */}
@@ -279,7 +416,12 @@ export function HomeClient() {
           </div>
 
           {/* Scrollable list */}
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          <div
+            className={cn(
+              'min-h-0 flex-1 overflow-y-auto overscroll-contain',
+              sheetSnap === 'peek' && dragHeight === null && 'hidden md:block',
+            )}
+          >
             <CenterList
               centers={centerList}
               selectedId={selectedCenter?.id}

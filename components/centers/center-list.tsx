@@ -25,7 +25,7 @@ export function CenterList({ centers, selectedId, isLoading }: CenterListProps) 
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-3 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]">
+      <div className="flex flex-col gap-3 p-3">
         {Array.from({ length: 5 }).map((_, i) => (
           <div key={i} className="flex gap-3 rounded-xl border p-3">
             <Skeleton className="size-20 shrink-0 rounded-lg" />
@@ -53,10 +53,7 @@ export function CenterList({ centers, selectedId, isLoading }: CenterListProps) 
   }
 
   return (
-    <div
-      ref={listRef}
-      className="flex flex-col gap-2.5 p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
-    >
+    <div ref={listRef} className="flex flex-col gap-2.5 p-3">
       {centers.map((center) => (
         <CenterCard key={center.id} center={center} isSelected={center.id === selectedId} />
       ))}
