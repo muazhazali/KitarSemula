@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { RecycleIcon } from 'lucide-react';
 import { SearchBar } from '@/components/search/search-bar';
@@ -9,6 +9,8 @@ import { FilterPanel } from '@/components/search/filter-panel';
 import { CenterList } from '@/components/centers/center-list';
 import { LocationButton } from '@/components/map/location-button';
 import { MapLegend } from '@/components/map/map-legend';
+import { StateOnboardingDialog } from '@/components/home/state-onboarding-dialog';
+import { MALAYSIA_STATES } from '@/lib/types';
 import type { RecyclingCenter, SearchParams } from '@/lib/types';
 
 const RecyclingMap = dynamic(() => import('@/components/map/recycling-map'), {
@@ -21,6 +23,7 @@ const RecyclingMap = dynamic(() => import('@/components/map/recycling-map'), {
 });
 
 const CENTERS_PAGE_SIZE = 250;
+const PREFERRED_STATE_KEY = 'kitarsemula.preferred-state';
 
 async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
   const all: RecyclingCenter[] = [];
@@ -51,6 +54,14 @@ async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
   return all;
 }
 
+function savePreferredState(state: string) {
+  try {
+    window.localStorage.setItem(PREFERRED_STATE_KEY, state);
+  } catch {
+    return;
+  }
+}
+
 export function HomeClient() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<Partial<SearchParams>>({
@@ -58,6 +69,26 @@ export function HomeClient() {
   });
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | undefined>();
   const [selectedCenter, setSelectedCenter] = useState<RecyclingCenter | undefined>();
+  const [statePromptOpen, setStatePromptOpen] = useState(false);
+
+  useEffect(() => {
+    let saved: string | null = null;
+    try {
+      saved = window.localStorage.getItem(PREFERRED_STATE_KEY);
+    } catch {
+      saved = null;
+    }
+
+    if (saved === 'all' || (saved && (MALAYSIA_STATES as readonly string[]).includes(saved))) {
+      if (saved !== 'all') {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- apply the saved filter after mount
+        setFilters((prev) => ({ ...prev, state: saved as string }));
+      }
+      return;
+    }
+
+    setStatePromptOpen(true);
+  }, []);
 
   const queryParams: SearchParams = useMemo(
     () => ({
@@ -82,6 +113,13 @@ export function HomeClient() {
 
   const handleFiltersChange = useCallback((updated: Partial<SearchParams>) => {
     setFilters(updated);
+    savePreferredState(updated.state ?? 'all');
+  }, []);
+
+  const handleStateSelect = useCallback((state: string) => {
+    setFilters((prev) => ({ ...prev, state: state === 'all' ? undefined : state }));
+    savePreferredState(state);
+    setStatePromptOpen(false);
   }, []);
 
   const centerList = centers ?? [];
@@ -145,6 +183,7 @@ export function HomeClient() {
           </div>
         </aside>
       </div>
+      <StateOnboardingDialog open={statePromptOpen} onSelect={handleStateSelect} />
     </div>
   );
 }

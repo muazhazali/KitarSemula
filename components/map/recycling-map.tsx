@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { RecyclingCenter } from '@/lib/types';
 import { getMarkerColor, isOpenNow, formatDistance } from '@/lib/utils/centers';
 
@@ -27,6 +27,7 @@ export default function RecyclingMap({
   const mapRef = useRef<HTMLDivElement>(null);
   const leafletMapRef = useRef<import('leaflet').Map | null>(null);
   const markersRef = useRef<Map<string, import('leaflet').CircleMarker>>(new Map());
+  const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
     if (!mapRef.current || leafletMapRef.current) return;
@@ -51,6 +52,7 @@ export default function RecyclingMap({
       }).addTo(map);
 
       leafletMapRef.current = map;
+      setMapReady(true);
     };
 
     initMap();
@@ -59,13 +61,14 @@ export default function RecyclingMap({
       cancelled = true;
       leafletMapRef.current?.remove();
       leafletMapRef.current = null;
+      setMapReady(false);
     };
   }, []);
 
   // Update markers when centers change
   useEffect(() => {
     const map = leafletMapRef.current;
-    if (!map) return;
+    if (!map || !mapReady) return;
 
     const updateMarkers = async () => {
       const L = (await import('leaflet')).default;
@@ -131,12 +134,12 @@ export default function RecyclingMap({
     };
 
     updateMarkers();
-  }, [centers, selectedId, onSelectCenter]);
+  }, [centers, selectedId, onSelectCenter, mapReady]);
 
   // Update selected marker size
   useEffect(() => {
     const map = leafletMapRef.current;
-    if (!map || !selectedId) return;
+    if (!map || !mapReady || !selectedId) return;
 
     const updateSelected = async () => {
       const L = (await import('leaflet')).default;
@@ -162,12 +165,12 @@ export default function RecyclingMap({
     };
 
     updateSelected();
-  }, [selectedId, centers]);
+  }, [selectedId, centers, mapReady]);
 
   // Show user location
   useEffect(() => {
     const map = leafletMapRef.current;
-    if (!map || !userLocation) return;
+    if (!map || !mapReady || !userLocation) return;
 
     const showLocation = async () => {
       const L = (await import('leaflet')).default;
@@ -186,7 +189,7 @@ export default function RecyclingMap({
     };
 
     showLocation();
-  }, [userLocation]);
+  }, [userLocation, mapReady]);
 
   return (
     <div

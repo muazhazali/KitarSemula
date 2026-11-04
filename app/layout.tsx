@@ -14,6 +14,19 @@ export const metadata: Metadata = {
   description:
     'Find recycling centers near you across Malaysia. Community-driven directory of recycling drop-off points for paper, plastic, e-waste, glass, metals, and more.',
   keywords: ['recycling', 'Malaysia', 'recycle center', 'e-waste', 'kitar semula', 'daur ulang'],
+  icons: {
+    icon: [
+      { url: '/icon-light-32x32.png', sizes: '32x32', type: 'image/png' },
+      {
+        url: '/icon-dark-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+        media: '(prefers-color-scheme: dark)',
+      },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-icon.png',
+  },
   openGraph: {
     title: 'KitarSemula.app — Malaysia Recycling Center Directory',
     description: 'Find recycling centers near you across Malaysia. Community-driven directory.',
