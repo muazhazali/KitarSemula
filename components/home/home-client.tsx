@@ -146,7 +146,7 @@ export function HomeClient() {
       <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
         {/* Map — full width on mobile, ~60% on desktop */}
         <main
-          className="relative order-1 h-[45vh] shrink-0 md:order-2 md:h-full md:flex-1"
+          className="relative isolate order-1 h-[45vh] shrink-0 md:order-2 md:h-full md:flex-1"
           aria-label="Map section"
         >
           <RecyclingMap
