@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   keywords: ['recycling', 'Malaysia', 'recycle center', 'e-waste', 'kitar semula', 'daur ulang'],
   icons: {
     icon: [
+      { url: '/icon.svg', sizes: 'any', type: 'image/svg+xml' },
       { url: '/icon-light-32x32.png', sizes: '32x32', type: 'image/png' },
       {
         url: '/icon-dark-32x32.png',
@@ -23,8 +24,8 @@ export const metadata: Metadata = {
         type: 'image/png',
         media: '(prefers-color-scheme: dark)',
       },
-      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
+    shortcut: '/favicon.ico',
     apple: '/apple-icon.png',
   },
   openGraph: {

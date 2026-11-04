@@ -6,12 +6,23 @@ import type { NextRequest } from 'next/server';
  * so SSR/API responses are hardened here.
  *
  * CSP keeps `'unsafe-inline'` in script-src because Next.js emits inline
- * bootstrap scripts; removing it requires a nonce-based setup. Note the policy
- * is still a meaningful restriction (no arbitrary script/connect origins).
+ * bootstrap scripts; removing it requires a nonce-based setup. `'unsafe-eval'`
+ * is allowed only in development so React's dev tooling can run; production
+ * keeps the stricter policy. The policy is still a meaningful restriction (no
+ * arbitrary script/connect origins).
  */
+const isDev = process.env.NODE_ENV !== 'production';
+const scriptSrc = [
+  "'self'",
+  "'unsafe-inline'",
+  ...(isDev ? ["'unsafe-eval'"] : []),
+  'https://challenges.cloudflare.com',
+  'https://static.cloudflareinsights.com',
+].join(' ');
+
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://static.cloudflareinsights.com",
+  `script-src ${scriptSrc}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
