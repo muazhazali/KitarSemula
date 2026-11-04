@@ -10,6 +10,7 @@ const config = [
       'node_modules/**',
       '.next/**',
       '.open-next/**',
+      '.wrangler/**',
       'pnpm-lock.yaml',
       'dev-server*.log',
       'worker-configuration.d.ts',

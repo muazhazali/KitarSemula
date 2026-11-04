@@ -20,22 +20,35 @@ const RecyclingMap = dynamic(() => import('@/components/map/recycling-map'), {
   ),
 });
 
-async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
-  const url = new URL('/api/centers', window.location.origin);
-  if (params.q) url.searchParams.set('q', params.q);
-  if (params.state && params.state !== 'all') url.searchParams.set('state', params.state);
-  if (params.items?.length) params.items.forEach((i) => url.searchParams.append('items', i));
-  if (params.open_now) url.searchParams.set('open_now', 'true');
-  if (params.verified_only) url.searchParams.set('verified_only', 'true');
-  if (params.sort) url.searchParams.set('sort', params.sort);
-  if (params.lat != null) url.searchParams.set('lat', String(params.lat));
-  if (params.lng != null) url.searchParams.set('lng', String(params.lng));
-  url.searchParams.set('limit', '50');
+const CENTERS_PAGE_SIZE = 250;
 
-  const res = await fetch(url.toString());
-  if (!res.ok) throw new Error('Failed to fetch centers');
-  const data = (await res.json()) as { centers: RecyclingCenter[] };
-  return data.centers;
+async function fetchCenters(params: SearchParams): Promise<RecyclingCenter[]> {
+  const all: RecyclingCenter[] = [];
+  let page = 1;
+
+  for (;;) {
+    const url = new URL('/api/centers', window.location.origin);
+    if (params.q) url.searchParams.set('q', params.q);
+    if (params.state && params.state !== 'all') url.searchParams.set('state', params.state);
+    if (params.items?.length) params.items.forEach((i) => url.searchParams.append('items', i));
+    if (params.open_now) url.searchParams.set('open_now', 'true');
+    if (params.verified_only) url.searchParams.set('verified_only', 'true');
+    if (params.sort) url.searchParams.set('sort', params.sort);
+    if (params.lat != null) url.searchParams.set('lat', String(params.lat));
+    if (params.lng != null) url.searchParams.set('lng', String(params.lng));
+    url.searchParams.set('page', String(page));
+    url.searchParams.set('limit', String(CENTERS_PAGE_SIZE));
+
+    const res = await fetch(url.toString());
+    if (!res.ok) throw new Error('Failed to fetch centers');
+    const data = (await res.json()) as { centers: RecyclingCenter[]; total: number };
+    all.push(...data.centers);
+
+    if (data.centers.length === 0 || all.length >= data.total) break;
+    page += 1;
+  }
+
+  return all;
 }
 
 export function HomeClient() {
