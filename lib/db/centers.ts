@@ -1,6 +1,7 @@
 import type { AppEnv } from './client';
 import type {
   CenterStatus,
+  CenterSubmission,
   OpeningHours,
   RecyclableCategory,
   RecyclingCenter,
@@ -163,6 +164,158 @@ export async function searchCenters(env: AppEnv, params: SearchParams): Promise<
   }
 
   return centers;
+}
+
+function slugifyBase(value: string): string {
+  const slug = value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80)
+    .replace(/-+$/g, '');
+  return slug || 'center';
+}
+
+async function uniqueSlug(env: AppEnv, base: string): Promise<string> {
+  let candidate = base;
+  let suffix = 2;
+  while (
+    await env.DB.prepare('SELECT 1 FROM centers WHERE slug = ? LIMIT 1').bind(candidate).first()
+  ) {
+    candidate = `${base}-${suffix}`;
+    suffix += 1;
+    if (suffix > 50) return `${base}-${crypto.randomUUID().slice(0, 8)}`;
+  }
+  return candidate;
+}
+
+export type CreateCenterResult =
+  | { ok: true; center: RecyclingCenter }
+  | { ok: false; duplicate: { slug: string; name: string } };
+
+export interface CreateCenterOptions {
+  verificationStatus?: VerificationStatus;
+  /** ISO timestamp; pass the approval time for admin-approved centers. */
+  lastVerifiedAt?: string | null;
+}
+
+/**
+ * Finds an existing center that matches a submission by name+state or by
+ * proximity (~50 m). Used before queueing and again before approval so two
+ * reviewers cannot publish the same place twice.
+ */
+export async function findDuplicateCenter(
+  env: AppEnv,
+  input: Pick<CenterSubmission, 'name' | 'state' | 'latitude' | 'longitude'>,
+): Promise<{ slug: string; name: string } | null> {
+  return env.DB.prepare(
+    `SELECT slug, name FROM centers
+     WHERE (LOWER(name) = LOWER(?) AND LOWER(state) = LOWER(?))
+        OR (ABS(latitude - ?) < 0.0005 AND ABS(longitude - ?) < 0.0005)
+     LIMIT 1`,
+  )
+    .bind(input.name, input.state, input.latitude, input.longitude)
+    .first<{ slug: string; name: string }>();
+}
+
+/**
+ * Inserts a center into the directory. Admin approval calls this with
+ * `verificationStatus: 'VERIFIED'`; the default is UNVERIFIED.
+ *
+ * Name+state and ~50 m coordinate checks reject obvious duplicates; exact slug
+ * collisions retry with a random suffix so concurrent inserts cannot fail.
+ */
+export async function createCenter(
+  env: AppEnv,
+  input: CenterSubmission,
+  options: CreateCenterOptions = {},
+): Promise<CreateCenterResult> {
+  const duplicate = await findDuplicateCenter(env, input);
+  if (duplicate) return { ok: false, duplicate };
+
+  const verificationStatus = options.verificationStatus ?? 'UNVERIFIED';
+  const lastVerifiedAt = options.lastVerifiedAt ?? null;
+
+  const id = crypto.randomUUID();
+  const now = new Date().toISOString();
+  const base = slugifyBase(`${input.name} ${input.area}`);
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${input.latitude},${input.longitude}`;
+
+  let insertedSlug: string | null = null;
+
+  for (let attempt = 0; attempt < 3 && !insertedSlug; attempt += 1) {
+    const slug =
+      attempt === 0 ? await uniqueSlug(env, base) : `${base}-${crypto.randomUUID().slice(0, 6)}`;
+
+    try {
+      await env.DB.prepare(
+        `INSERT INTO centers (
+           id, slug, name, address, state, area, latitude, longitude,
+           phone, website_url, google_maps_url, accepted_items, tags, opening_hours,
+           status, verification_status, upvote_count, downvote_count, notes,
+           created_at, updated_at, last_verified_at
+         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, ?, ?, ?, ?)`,
+      )
+        .bind(
+          id,
+          slug,
+          input.name,
+          input.address,
+          input.state,
+          input.area,
+          input.latitude,
+          input.longitude,
+          input.phone ?? null,
+          input.website_url ?? null,
+          googleMapsUrl,
+          JSON.stringify(input.accepted_items),
+          '[]',
+          '{}',
+          'ACTIVE',
+          verificationStatus,
+          input.notes ?? null,
+          now,
+          now,
+          lastVerifiedAt,
+        )
+        .run();
+      insertedSlug = slug;
+    } catch (error) {
+      if (attempt === 2) throw error;
+    }
+  }
+
+  if (!insertedSlug) throw new Error('Could not allocate a unique center slug');
+
+  return {
+    ok: true,
+    center: {
+      id,
+      slug: insertedSlug,
+      name: input.name,
+      address: input.address,
+      state: input.state,
+      area: input.area,
+      latitude: input.latitude,
+      longitude: input.longitude,
+      ...(input.phone ? { phone: input.phone } : {}),
+      ...(input.website_url ? { website_url: input.website_url } : {}),
+      google_maps_url: googleMapsUrl,
+      accepted_items: input.accepted_items,
+      tags: [],
+      opening_hours: {},
+      status: 'ACTIVE',
+      verification_status: verificationStatus,
+      upvote_count: 0,
+      downvote_count: 0,
+      ...(input.notes ? { notes: input.notes } : {}),
+      created_at: now,
+      updated_at: now,
+      ...(lastVerifiedAt ? { last_verified_at: lastVerifiedAt } : {}),
+    },
+  };
 }
 
 export async function getCenterBySlug(env: AppEnv, slug: string): Promise<RecyclingCenter | null> {

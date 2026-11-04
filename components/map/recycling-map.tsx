@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { RecyclingCenter } from '@/lib/types';
 import { getMarkerColor, isOpenNow, formatDistance } from '@/lib/utils/centers';
+import { loadMapView, saveMapView } from '@/lib/view-state';
 
 interface RecyclingMapProps {
   centers: RecyclingCenter[];
@@ -46,6 +47,7 @@ export default function RecyclingMap({
   const leafletMapRef = useRef<import('leaflet').Map | null>(null);
   const markersRef = useRef<Map<string, import('leaflet').Marker>>(new Map());
   const userMarkerRef = useRef<import('leaflet').CircleMarker | null>(null);
+  const restoredViewRef = useRef(false);
   const [mapReady, setMapReady] = useState(false);
 
   useEffect(() => {
@@ -58,17 +60,26 @@ export default function RecyclingMap({
       await import('leaflet/dist/leaflet.css');
       if (cancelled || !mapRef.current) return;
 
+      const savedView = loadMapView();
       const map = L.map(mapRef.current, {
-        center: [4.2105, 108.9758],
-        zoom: 6,
+        center: savedView ? [savedView.lat, savedView.lng] : [4.2105, 108.9758],
+        zoom: savedView ? savedView.zoom : 6,
         zoomControl: true,
       });
+      restoredViewRef.current = Boolean(savedView);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       }).addTo(map);
+
+      // Persist the viewport so returning from a center page restores the same
+      // map position instead of refitting to the whole result set.
+      map.on('moveend', () => {
+        const center = map.getCenter();
+        saveMapView({ lat: center.lat, lng: center.lng, zoom: map.getZoom() });
+      });
 
       leafletMapRef.current = map;
       setMapReady(true);
@@ -161,12 +172,17 @@ export default function RecyclingMap({
       });
 
       // Keep the viewport focused on the current result set. Skip while the user
-      // is navigating by location, where flyTo owns the viewport.
+      // is navigating by location, where flyTo owns the viewport, and skip the
+      // first pass when a saved viewport was restored.
       if (centers.length > 0 && !userLocation) {
-        const bounds = L.latLngBounds(
-          centers.map((center) => [center.latitude, center.longitude] as [number, number]),
-        );
-        map.fitBounds(bounds, { padding: [32, 32], maxZoom: 12 });
+        if (restoredViewRef.current) {
+          restoredViewRef.current = false;
+        } else {
+          const bounds = L.latLngBounds(
+            centers.map((center) => [center.latitude, center.longitude] as [number, number]),
+          );
+          map.fitBounds(bounds, { padding: [32, 32], maxZoom: 12 });
+        }
       }
     };
 

@@ -94,6 +94,30 @@ export interface RecyclingCenter {
   thumbnail_url?: string;
 }
 
+export interface CenterSubmission {
+  name: string;
+  address: string;
+  state: string;
+  area: string;
+  latitude: number;
+  longitude: number;
+  accepted_items: RecyclableCategory[];
+  phone?: string;
+  website_url?: string;
+  notes?: string;
+}
+
+export type SuggestionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
+
+export interface CenterSuggestion extends CenterSubmission {
+  id: string;
+  status: SuggestionStatus;
+  center_slug?: string;
+  review_note?: string;
+  created_at: string;
+  reviewed_at?: string;
+}
+
 export const MAX_PHOTOS_PER_CENTER = 1;
 export const MAX_PHOTO_BYTES = 1 * 1024 * 1024;
 

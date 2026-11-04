@@ -2,7 +2,7 @@
 
 Goal: run the Next.js 16 app on **Cloudflare Workers** (static assets + SSR via an adapter) with **D1** for all mutable data (centers, votes, photos metadata) and **R2** for photo bytes. Local `next dev` keeps working; `pnpm preview` runs the real workerd build.
 
-> Community scope is **votes + photo upload only**. Comments, reports, add-center, and suggest-edit were removed by product decision — do not reintroduce them.
+> Community scope is **votes, photo upload, and moderated center submission**. Comments, reports, and suggest-edit remain out of scope. Submissions land in `center_suggestions` as `PENDING` (Turnstile + rate limit) and publish as `VERIFIED` only after an admin approves them in `/admin/suggestions` using the `ADMIN_TOKEN` secret.
 
 ## Decisions to make first
 

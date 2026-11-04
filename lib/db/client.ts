@@ -9,12 +9,15 @@ export interface AppEnv {
   PHOTOS: R2Bucket;
   /** Optional R2 custom domain, e.g. https://photos.kitarsemula.app */
   PHOTO_PUBLIC_BASE_URL?: string;
+  /** Bearer token for the admin suggestion-review API. */
+  ADMIN_TOKEN?: string;
   /** Turnstile secret for server-side siteverify. */
   TURNSTILE_SECRET_KEY?: string;
   /** Comma-separated allowed frontend hostnames (e.g. "muaz.app"). */
   TURNSTILE_HOSTNAMES?: string;
   PHOTO_RATE_LIMITER?: RateLimit;
   VOTE_RATE_LIMITER?: RateLimit;
+  SUBMIT_RATE_LIMITER?: RateLimit;
 }
 
 /**

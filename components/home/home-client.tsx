@@ -9,12 +9,14 @@ import {
   ChevronUpIcon,
   Maximize2Icon,
   Minimize2Icon,
+  PlusIcon,
   RecycleIcon,
   SlidersHorizontalIcon,
 } from 'lucide-react';
 import { SearchBar } from '@/components/search/search-bar';
 import { FilterPanel, countActiveFilters } from '@/components/search/filter-panel';
 import { CenterList } from '@/components/centers/center-list';
+import { SuggestCenterDialog } from '@/components/centers/suggest-center-dialog';
 import { LocationButton } from '@/components/map/location-button';
 import { MapLegend } from '@/components/map/map-legend';
 import { StateOnboardingDialog } from '@/components/home/state-onboarding-dialog';
@@ -30,6 +32,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { loadSelectedCenterSlug, saveSelectedCenterSlug } from '@/lib/view-state';
 import { MALAYSIA_STATES } from '@/lib/types';
 import type { RecyclingCenter, SearchParams } from '@/lib/types';
 
@@ -101,9 +104,11 @@ export function HomeClient() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | undefined>();
   const [selectedCenter, setSelectedCenter] = useState<RecyclingCenter | undefined>();
   const [statePromptOpen, setStatePromptOpen] = useState(false);
+  const [suggestOpen, setSuggestOpen] = useState(false);
   const [sheetSnap, setSheetSnap] = useState<SheetSnap>('half');
   const [dragHeight, setDragHeight] = useState<number | null>(null);
   const sheetRef = useRef<HTMLElement>(null);
+  const restoredSlugRef = useRef<string | null>(null);
   const sheetDragRef = useRef<{
     startY: number;
     startHeight: number;
@@ -157,6 +162,24 @@ export function HomeClient() {
     queryFn: () => fetchCenters(queryParams),
     placeholderData: (prev) => prev,
   });
+
+  // Restore the center that was open before navigating to its detail page.
+  useEffect(() => {
+    restoredSlugRef.current = loadSelectedCenterSlug();
+  }, []);
+
+  useEffect(() => {
+    if (!centers) return;
+    const slug = restoredSlugRef.current;
+    if (!slug) return;
+    restoredSlugRef.current = null;
+    const match = centers.find((center) => center.slug === slug);
+    if (match) setSelectedCenter(match);
+  }, [centers]);
+
+  useEffect(() => {
+    if (selectedCenter) saveSelectedCenterSlug(selectedCenter.slug);
+  }, [selectedCenter]);
 
   const handleLocation = useCallback((lat: number, lng: number) => {
     setUserLocation({ lat, lng });
@@ -270,6 +293,17 @@ export function HomeClient() {
           <SearchBar value={searchInput} onChange={handleSearchChange} />
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setSuggestOpen(true)}
+            className="border-border bg-background size-11 shadow-sm sm:w-auto sm:gap-1.5 sm:px-3"
+            aria-label="Add a recycling center"
+            title="Add a recycling center"
+          >
+            <PlusIcon className="size-5 sm:size-4" aria-hidden="true" />
+            <span className="hidden text-sm font-medium sm:inline">Add center</span>
+          </Button>
           <LocationButton onLocation={handleLocation} />
         </div>
       </header>
@@ -431,6 +465,12 @@ export function HomeClient() {
         </aside>
       </div>
       <StateOnboardingDialog open={statePromptOpen} onSelect={handleStateSelect} />
+      {suggestOpen && (
+        <SuggestCenterDialog
+          onClose={() => setSuggestOpen(false)}
+          defaultState={filters.state && filters.state !== 'all' ? filters.state : undefined}
+        />
+      )}
     </div>
   );
 }

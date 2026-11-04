@@ -34,14 +34,16 @@ Source: `app/center/[slug]/page.tsx`
 
 - Vote up/down with live counts (`app/api/centers/[slug]/vote/route.ts`), persisted in D1. One vote per IP per center (repeat votes update rather than increment).
 - **Photo upload**, **1 per center**, ≤1 MB (`app/api/centers/[slug]/photos/route.ts`). JPEG/PNG/WebP, validated by magic bytes. Bytes in R2 (`PHOTOS` binding), metadata in D1 (`photos`). Deleting photos is intentionally not exposed publicly.
-- Comments, issue reports, add-center, suggest-edit are intentionally **out of scope** and removed. Do not reintroduce without a product decision.
+- **Center submission** (`POST /api/centers`, form in `components/centers/suggest-center-dialog.tsx`). Anyone can suggest a center with name, address, state/area, map-picked coordinates, and accepted items. Submissions go to the `center_suggestions` queue as `PENDING` and are invisible on the map until approved. Duplicates against live centers (same name+state or within ~50 m) and identical pending suggestions are rejected with a 409. Protected by Turnstile (`center_submit` action) and a 3/min per-IP rate limit.
+- **Admin review** (`/admin/suggestions`, `GET/PATCH /api/admin/suggestions`). A bearer `ADMIN_TOKEN` secret gates the queue. Approving publishes the center as `VERIFIED`; rejecting records an optional review note. There is no user-account system.
+- Comments, issue reports, and suggest-edit are intentionally **out of scope**. Do not reintroduce without a product decision.
 
 ## Non-functional requirements
 
-- **Persistence / durability** — centers and votes persist in Cloudflare D1; photo bytes in R2. Vote counts are derived by aggregating the `votes` table, so they cannot drift.
+- **Persistence / durability** — centers, votes, and pending suggestions persist in Cloudflare D1; photo bytes in R2. Vote counts are derived by aggregating the `votes` table, so they cannot drift.
 - **Performance** — text/state/verified filters run in SQL; item matching, open-now, distance, and sorting run in JS over the filtered set (~250 rows), matching the previous in-memory semantics.
 - **Scalability** — reads dominate; write volume is low (votes, photos). D1 read replication covers it; R2 has effectively unbounded capacity.
-- **Security** — zod validation plus magic-byte sniffing on photo upload; rate limiting (5 uploads/min, 30 votes/min per IP) and Turnstile both **fail closed in production** when their binding/secret is missing; baseline security headers (CSP, HSTS, `nosniff`, frame denial) set in `middleware.ts`. Votes are deduped per IP per center via the `votes` primary key, but IP is a coarse identity and there is no auth.
+- **Security** — zod validation plus magic-byte sniffing on photo upload; rate limiting (5 uploads/min, 30 votes/min, 3 center submissions/min per IP) and Turnstile both **fail closed in production** when their binding/secret is missing; baseline security headers (CSP, HSTS, `nosniff`, frame denial) set in `middleware.ts`. Votes are deduped per IP per center via the `votes` primary key, but IP is a coarse identity. Admin review is token-gated; `ADMIN_TOKEN` unset fails closed and disables the review UI/API.
 - **Media** — max 1 photo per center, ≤1 MB, JPEG/PNG/WebP only; bytes in R2, metadata in D1; images served unoptimized with `nosniff`.- **Correctness gates** — `typescript.ignoreBuildErrors: true`, no test suite; verification is `pnpm lint` + `pnpm exec tsc --noEmit`. The adapter build will not catch type errors either.
 - **SEO / shareability** — metadata templates, per-center OpenGraph, JSON-LD, static generation.
 - **Accessibility** — ARIA labels, `aria-pressed` / `aria-expanded`, semantic landmarks throughout.

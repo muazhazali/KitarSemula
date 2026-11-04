@@ -16,3 +16,8 @@ TURNSTILE_HOSTNAMES=
 # Optional: public R2 custom domain, e.g. https://photos.kitarsemula.app
 # When unset, photos are served through /api/photos/<id>.
 PHOTO_PUBLIC_BASE_URL=
+
+# Bearer token for /admin/suggestions and /api/admin/suggestions.
+# Development: any non-empty value works locally.
+# Production: set with `wrangler secret put ADMIN_TOKEN`; unset disables admin access.
+ADMIN_TOKEN=

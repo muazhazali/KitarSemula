@@ -24,3 +24,6 @@ export function parseHostnames(value: string | undefined): string[] {
 
 /** Turnstile action for the photo-upload surface. */
 export const TURNSTILE_ACTION_PHOTO_UPLOAD = 'photo_upload';
+
+/** Turnstile action for the community center-submission surface. */
+export const TURNSTILE_ACTION_CENTER_SUBMIT = 'center_submit';
