@@ -8,6 +8,7 @@ import type {
   VerificationStatus,
 } from '@/lib/types';
 import { getDistanceKm, isOpenNow } from '@/lib/utils/centers';
+import { isHiddenForLocationReview } from '@/lib/location-review';
 import { getVoteCounts } from './votes';
 
 interface CenterRow {
@@ -117,7 +118,9 @@ export async function searchCenters(env: AppEnv, params: SearchParams): Promise<
     .bind(...binds)
     .all<CenterRow>();
 
-  let centers = (results ?? []).map(rowToCenter);
+  let centers = (results ?? [])
+    .map(rowToCenter)
+    .filter((center) => !isHiddenForLocationReview(center.slug));
 
   // Items filter (AND semantics, case-insensitive exact match)
   if (params.items && params.items.length > 0) {
@@ -161,6 +164,8 @@ export async function searchCenters(env: AppEnv, params: SearchParams): Promise<
 }
 
 export async function getCenterBySlug(env: AppEnv, slug: string): Promise<RecyclingCenter | null> {
+  if (isHiddenForLocationReview(slug)) return null;
+
   const row = await env.DB.prepare('SELECT * FROM centers WHERE slug = ? LIMIT 1')
     .bind(slug)
     .first<CenterRow>();

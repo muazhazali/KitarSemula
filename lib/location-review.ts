@@ -1,0 +1,37 @@
+const HIDDEN_LOCATION_REVIEW_SLUGS = new Set([
+  'e-ding-ckf-enterprise-recycle',
+  'hup-huat-scrap-centre',
+  'ms-recycle-trading',
+  'sutera-mall-recycling-centre',
+  'sian-kiat-sdn-bhd',
+  's2-recycle',
+  'community-recycle-for-charity-crc',
+  'pusat-kitar-semula-mp-tiong-nam',
+  'sungai-besi-recycle',
+  'borneo-recycle',
+  'projek-pembuatan-baja-kompos',
+  'ceria-alam-enterprise',
+  'pusat-komuniti-lestari-taman-tunku-sarina',
+  'universiti-malaya',
+  'j-free-enterprise-recycle',
+  'ros-recycling-center',
+  'seri-metal-recycle-sdn-bhd',
+  'taisi-metal-recycle-sdn-bhd',
+  'dbkl-government-river-reserved-land',
+  'e-waste-collection-centre',
+  'murabana',
+  'recycling-centre-way-1226958508',
+  'perniagaan-barang-barang-lusuh',
+  'tzu-chi-melaka-recycling-station',
+  'delta-steel-sdn-bhd',
+  'ecowish-sdn-bhd',
+  'hock-soon-ho-kitar-semula',
+  'jj-recycle-sdn-bhd',
+  'pusat-pengumpulan-kitar-semula-surau-al-kauthar',
+  'wkf-recycling-enterprise',
+  'recycling-centre-way-1084511892',
+]);
+
+export function isHiddenForLocationReview(slug: string): boolean {
+  return HIDDEN_LOCATION_REVIEW_SLUGS.has(slug);
+}

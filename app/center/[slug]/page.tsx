@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getCenterBySlug } from '@/lib/db/centers';
 import { getAppEnv } from '@/lib/db/client';
 import { CENTER_SLUGS } from '@/lib/center-slugs';
+import { isHiddenForLocationReview } from '@/lib/location-review';
 import { CenterDetailClient } from '@/components/centers/center-detail-client';
 
 export const revalidate = 300;
@@ -18,7 +19,7 @@ interface PageProps {
  * require a redeploy.
  */
 export async function generateStaticParams() {
-  return CENTER_SLUGS.map((slug) => ({ slug }));
+  return CENTER_SLUGS.filter((slug) => !isHiddenForLocationReview(slug)).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
